@@ -19,17 +19,21 @@
         <div class="login__wrapper">
             <h1>С возвращением!</h1>
             <form class="login" action="{% url 'login' %}" method="post"> <!-- action – это веб-адрес (URL) программы, которая обрабатывает данные формы. -->
-                {{ form }}
+                <!--{{ form }}
                 {% csrf_token %}
-                <button type="submit">Submit</button>
+                <button type="submit">Submit</button>-->
 
-                <!--<label for="email">E-mail</label>
-                <input type="email" placeholder="Введите ваш email" id="email" name="user_email">
+                <label for="{{ form.username.id_for_label }}">Имя</label>
+                {% csrf_token %}
+                {{ form.username }}
+                <!--<input type="email" placeholder="Введите ваш email" id="email" name="user_email">-->
 
-                <label for="password">Пароль</label>
-                <input type="password" placeholder="Введите пароль" id="password" name="user_password">
+                <label for="{{ form.password.id_for_label }}">Пароль</label>
+                {% csrf_token %}
+                {{ form.password }}
+                <!--<input type="password" placeholder="Введите пароль" id="password" name="user_password">-->
                 <a href="#" class="standart-text_light-grey">Забыли пароль?</a>
-                <button type="submit" class="sumbit-btn sumbit-text">Войти</button>-->
+                <button type="submit" class="sumbit-btn sumbit-text">Войти</button>
             </form>
         </div>
     </main>
@@ -40,27 +44,3 @@
     </footer>
 </body>
 </html>
-
-
-
-
-<!--<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Urfolio - вход</title>
-</head>
-<body>
-    <a href="/">На главную</a>
-    {% if form.errors %}
-        <p>{{ form.errors.error }}</p>
-    {% endif %}
-
-    <form action="{% url 'login' %}" method = "post">
-        {{ form }}
-        {% csrf_token %}
-        <button type="submit">Submit</button>
-    </form>
-    <a href="{% url 'register' %}">Ещё нет аккаунта? Зарегистрируйтесь!</a>
-</body>
-</html>-->
