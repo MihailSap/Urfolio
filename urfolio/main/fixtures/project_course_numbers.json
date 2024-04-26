@@ -1,0 +1,1 @@
+[{"model": "main.projectcoursenumber", "pk": 1, "fields": {"name": "1 курс", "ide": "filter_course1"}}, {"model": "main.projectcoursenumber", "pk": 2, "fields": {"name": "2 курс", "ide": "filter_course2"}}]

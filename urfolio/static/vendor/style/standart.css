@@ -1,0 +1,112 @@
+@font-face {
+    font-family: "Rubik";
+    src: url(../assets/font/Rubik.ttf);
+}
+
+@font-face {
+    font-family: "DM-sans";
+    src: url(../assets/font/DMSans-Bold.ttf);
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+p{
+    margin: 0;
+}
+
+h2{
+    font-size: 24px;
+    margin: 0;
+}
+
+h3{
+    margin: 0;
+}
+
+button{
+    outline: none;
+    border: 0;
+    padding: 0px;
+    background: transparent;
+    cursor: pointer;
+}
+
+ul{
+    margin: 0;
+    padding: 0;
+}
+
+li{
+    list-style-type: none;
+}
+
+body{
+    color: black;
+    font-size: 16px;
+    padding: 1% 2% 1% 2%;
+    margin: 0;
+    font-family: "Rubik", "Arial";
+}
+
+header + hr{
+    margin-left: -3%;
+    margin-right: -3%;
+}
+
+.user__text_DM-sans{
+    font-family: "DM-sans"; /* Не работает с руссиан лангуаге */
+    font-weight: bold;
+    color: #777E90;
+}
+
+
+.standart-text_grey{
+    font-family: "Rubik", "Arial";
+    font-size: 16px;
+    color: #5b606b;
+}
+
+.standart-text_light-grey{
+    font-family: "Rubik", "Arial";
+    font-size: 16px;
+    color: #9c9c9c;
+}
+
+.logo{
+    width: 150px;
+}
+
+input[type="checkbox"] + label{
+    cursor: pointer;
+}
+
+input[type="checkbox"] {
+    appearance: none;
+    margin: 0;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #CAD1E1;
+    border-radius: 3px;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+input[type="checkbox"]:checked {
+    border: 2px solid #95A1BB;
+    background-color: #95A1BB;
+}
+
+input[type="checkbox"]:checked + label {
+    color: #5b606b;
+}
+
+input[type="text"]{
+    height: 25px;
+    border: 2px solid #CAD1E1;
+    border-radius: 3px;
+}

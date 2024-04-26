@@ -1,0 +1,1 @@
+[{"model": "main.projectcategory", "pk": 1, "fields": {"name": "новелла", "ide": "filter_novella"}}, {"model": "main.projectcategory", "pk": 2, "fields": {"name": "сайт", "ide": "filter_site"}}]

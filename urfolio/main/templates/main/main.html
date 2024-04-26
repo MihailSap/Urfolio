@@ -1,0 +1,200 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Urfolio</title>
+    <link rel="stylesheet" href="{% static 'vendor/style/main.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/style/standart.css' %}">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/"><img src="{% static 'vendor/assets/img/logo.png' %}" class="logo" alt="Логотип"></a>
+            <div class="user-profile user__text_DM-sans">
+                {% if user.is_authenticated %}
+                    <form action="{% url 'logout' %}" method="post">
+                        {% csrf_token %}
+                        <button class="nick-name" type="submit">Выйти</button>
+                    </form>
+                {% else %}
+                    <form action="{% url 'login' %}" method="get">
+                        {% csrf_token %}
+                        <button class="nick-name" type="submit">Войти</button>
+                    </form>
+                {% endif %}
+                <a href="" id="profile-link" class="user-profile__link user__text_DM-sans">
+                    <p class="nick-name" id="user-name">
+                        {% if user.is_authenticated %}
+                            {{ user }}
+                        {% endif %}
+                    </p>
+                    <div class="user-avatar"></div>
+                </a>
+            </div>
+        </nav>
+    </header>
+    <hr>
+    <main>
+        <div class="main__wrapper">
+            <div class="feed-setting">
+                <div class="feed-setting__sorting">
+                    <h2>Сортировка</h2>
+                    <hr>
+                    <ul>
+                        <li class="setting__item">
+                            <button type="button" class="button_style-none" id="sorting-type">
+                                <svg id="sort-type_time" width="19" height="12" viewBox="0 0 19 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <line x1="17" y1="1.5" x2="2" y2="1.5" stroke="#95A1BB"/>
+                                    <line x1="17" y1="5.5" x2="2" y2="5.5" stroke="#95A1BB"/>
+                                    <line x1="17" y1="9.5" x2="2" y2="9.5" stroke="#95A1BB"/>
+                                </svg>
+                                <span class="standart-text_grey">по времени</span>
+                            </button>
+                        </li>
+                        <li class="setting__item">
+                            <button type="button" id="sorting-type">
+                                <svg id="sort-type_rating" width="19" height="12" viewBox="0 0 19 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <line x1="17" y1="1.5" x2="2" y2="1.5" stroke="#95A1BB"/>
+                                    <line x1="17" y1="5.5" x2="2" y2="5.5" stroke="#95A1BB"/>
+                                    <line x1="17" y1="9.5" x2="2" y2="9.5" stroke="#95A1BB"/>
+                                </svg>
+                                <span class="standart-text_grey">по рейтингу</span>
+                            </button>
+                        </li>
+                        <li class="setting__item">
+                            <button type="button" class="button_style-none" id="sorting-type">
+                                <svg id="sort-type_title" width="19" height="12" viewBox="0 0 19 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <line x1="17" y1="1.5" x2="2" y2="1.5" stroke="#95A1BB"/>
+                                    <line x1="17" y1="5.5" x2="2" y2="5.5" stroke="#95A1BB"/>
+                                    <line x1="17" y1="9.5" x2="2" y2="9.5" stroke="#95A1BB"/>
+                                </svg>
+                                <span class="standart-text_grey">по названию</span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <div class="feed-setting__filter">
+                    <h2>Фильтры</h2>
+                    <hr>
+                    <ul>
+                        <li class="setting__item">
+                            <button type="button" class="button_style-none" id="filter-type">
+                                <svg class="close-filter__type" id="svg_project" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <line x1="8" x2="8" y2="16" stroke="#95A1BB" stroke-width="2"/>
+                                    <line y1="8" x2="16" y2="8" stroke="#95A1BB" stroke-width="2"/>
+                                </svg>
+                                <span class="standart-text_grey">тип проекта</span>
+                            </button>
+                            <div class="filter-type__item" id="type_item">
+                                {% for category in categories %}
+                                <div class="filter-type__wrapper">
+                                    <input type="checkbox" name="type" id="{{ category.ide }}">
+                                    <label for="{{ category.ide }}" class="standart-text_light-grey">
+                                        <a class="standart-text_light-grey" href = "{% url 'projects:category' category.id %}">
+                                            {{ category.name }}
+                                        </a>
+                                    </label>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </li>
+                        <li class="setting__item">
+                            <button type="button" class="button_style-none" id="filter-type">
+                                <svg class="close-filter__year" id="svg_year" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <line x1="8" x2="8" y2="16" stroke="#95A1BB" stroke-width="2"/>
+                                    <line y1="8" x2="16" y2="8" stroke="#95A1BB" stroke-width="2"/>
+                                </svg>
+                                <span class="standart-text_grey">учебный год</span>
+                            </button>
+                            <div class="filter-type__item" id="type_item">
+                                {% for year in years %}
+                                <div class="filter-type__wrapper">
+                                    <input type="checkbox" name="type" id="{{ year.ide }}">
+                                    <label for="{{ year.ide }}" class="standart-text_light-grey">
+                                        <a class="standart-text_light-grey" href = "{% url 'projects:year' year.id %}">
+                                            {{ year.name }}
+                                        </a>
+                                    </label>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </li>
+                        <li class="setting__item">
+                            <button type="button" class="button_style-none" id="filter-type">
+                                <svg class="close-filter__course" id="svg_course" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <line x1="8" x2="8" y2="16" stroke="#95A1BB" stroke-width="2"/>
+                                    <line y1="8" x2="16" y2="8" stroke="#95A1BB" stroke-width="2"/>
+                                </svg>
+                                <span class="standart-text_grey">номер курса</span>
+                            </button>
+                            <div class="filter-type__item" id="type_item">
+                                {% for course_number in course_numbers %}
+                                <div class="filter-type__wrapper">
+                                    <input type="checkbox" name="type" id="{{ course_number.ide }}">
+                                    <label for="{{ course_number.ide }}" class="standart-text_light-grey">
+                                        <a class="standart-text_light-grey" href = "{% url 'projects:course_number' course_number.id %}">
+                                            {{ course_number.name }}
+                                        </a>
+                                    </label>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </li>
+                        <li class="setting__item">
+                            <button type="button" class="button_style-none" id="filter-type">
+                                <svg class="close-filter__author" id="svg_author" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <line x1="8" x2="8" y2="16" stroke="#95A1BB" stroke-width="2"/>
+                                    <line y1="8" x2="16" y2="8" stroke="#95A1BB" stroke-width="2"/>
+                                </svg>
+                                <span class="standart-text_grey">автор</span>
+                            </button>
+                            <div class="filter-type__item" id="type_item">
+                                <div class="filter-type__wrapper">
+                                    <input type="text" name="author" id="nameAuthor">
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <button type="button" id="sendFilter" class="send-filter standart-text_grey"><h3>Применить</h3></button>
+            </div>
+            <div class="project__feed">
+                {% for project in projects %}
+                <div class="feed__item">
+                    <a href="#" id="user-project__link"><img src="{{ project.image.url }}" alt="Привью проекта" id="project-photo"></a>
+                    <div class="project__card">
+                        <div class="project__title">
+                            <a href="#" id="user-project__link">
+                                <h2 id="name-progect">{{ project.name }}</h2>
+                            </a>
+                            <span id="project-date">20 Map 2024</span>
+                            <p class="progect__description"><b>Описание проекта</b><br> <span id="progect__description">{{ project.description }}</span></p>
+                        </div>
+                        <div class="project__information">
+                            <a href="../html/">Подробнее</a>
+                            <div class="project__rating">
+                                <div class="like__wrapper">
+                                    <button type="button" class="info__rating-project" id="like-button"><img src="{% static 'vendor/assets/img/Likes.png' %}" id="like-icon" alt="Иконка лайка"><span class="activities-number" id="like-number">0</span></button>
+                                </div>
+                                <div class="info__rating-project">
+                                    <button type="button" id="share"><img src="{% static 'vendor/assets/img/Share.png' %}" alt="Иконка поделиться"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </main>
+    <footer>
+        <button class="footer__button user__text_DM-sans" type="button">Ещё проекты <span id="still-projects">(60+)</span></button>
+    </footer>
+
+    <script src="{% static 'vendor/js/main.js' %}" defer></script>
+</body>
+</html>

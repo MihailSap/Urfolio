@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Urfolio - вход</title>
+</head>
+<body>
+    <a href="/">На главную</a>
+    {% if form.errors %}
+        <p>{{ form.errors.error }}</p>
+    {% endif %}
+
+    <form action="{% url 'login' %}" method = "post">
+        {{ form }}
+        {% csrf_token %}
+        <button type="submit">Submit</button>
+    </form>
+    <a href="{% url 'register' %}">Ещё нет аккаунта? Зарегистрируйтесь!</a>
+</body>
+</html>
