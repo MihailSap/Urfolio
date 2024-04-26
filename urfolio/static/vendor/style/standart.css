@@ -17,12 +17,21 @@ p{
     margin: 0;
 }
 
+h1{
+    margin: 0;
+    font-size: 40px;
+}
+
 h2{
     font-size: 24px;
     margin: 0;
 }
 
 h3{
+    margin: 0;
+}
+
+h4{
     margin: 0;
 }
 
@@ -49,6 +58,8 @@ body{
     padding: 1% 2% 1% 2%;
     margin: 0;
     font-family: "Rubik", "Arial";
+    overflow-x: hidden;
+    min-height: 100%;
 }
 
 header + hr{
@@ -73,6 +84,17 @@ header + hr{
     font-family: "Rubik", "Arial";
     font-size: 16px;
     color: #9c9c9c;
+}
+
+.standart-text_light-grey:hover{
+    color: #777E90;
+}
+
+.sumbit-text{
+    font-family: "DM-sans";
+    font-size: 16px;
+    font-weight: bold;
+    color: #FFFFFF;
 }
 
 .logo{
@@ -109,4 +131,10 @@ input[type="text"]{
     height: 25px;
     border: 2px solid #CAD1E1;
     border-radius: 3px;
+}
+
+.sumbit-btn{
+    border-radius: 25px;
+    padding: 16px 0 16px 0;
+    background-color: #000000;
 }

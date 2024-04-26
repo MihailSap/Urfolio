@@ -1,0 +1,76 @@
+@keyframes regist-link {
+    0% {font-size: 14px;}
+    100% {font-size: 16px; font-weight: 400;}
+}
+
+@keyframes regist-link-reverse {
+    0% {font-size: 16px; font-weight: 400;}
+    100% {font-size: 14px;}
+}
+
+header{
+    text-align: center;
+}
+
+.login__wrapper{
+    max-width: 30vw;
+    max-height: 50vh;
+    display: flex;
+    flex-direction: column;
+    gap: 70px;
+    margin: auto;
+    margin-top: 10%;
+    text-align: center;
+    align-items: center;
+}
+
+.login{
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+label{
+    font-weight: 400;
+}
+
+.login > input{
+    background-color: #EDF2F7;
+    width: 400px;
+    margin-top: 8px;
+    height: 30px;
+    background-color: #e2e7eb;
+    border: none;
+    border-radius: 3px;
+}
+
+input:not(:last-of-type){
+    margin-bottom: 30px;
+}
+
+.login > a{
+    margin-bottom: 30px;
+}
+
+.standart-text_light-grey{
+    font-size: 14px;
+    text-align: right;
+}
+
+main{
+    max-height: 100vh;
+}
+
+footer{
+    display: flex;
+    justify-content: center;
+    margin-top: 5%;
+}
+
+.go-to-regist:hover{
+    animation: regist-link 1s ease forwards;
+}
+
+.go-to-regist:not(:hover) {
+    animation: regist-link-reverse 1s ease forwards; /* Применяем анимацию назад при убирании мыши */
+}

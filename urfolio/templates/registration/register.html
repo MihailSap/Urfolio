@@ -1,4 +1,48 @@
+{% load static %}
+
 <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Urfolio</title>
+    <link rel="stylesheet" href="{% static 'vendor/style/standart.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/style/login.css' %}">
+</head>
+<body>
+    <header>
+        <a href="/"><img src="{% static 'vendor/assets/img/logo.png' %}" alt="Логотип"></a>
+    </header>
+    <hr>
+    <main>
+        <div class="login__wrapper">
+            <h1>Добро пожаловать!</h1>
+            <form class="login" action="{% url 'register' %}" method="post">
+                {{ form }}
+                {% csrf_token %}
+                <!--<label for="email">Имя пользователя</label>
+                <input type="text" placeholder="Введите имя пользователя" id="email" name="new_user_name">
+
+                <label for="email">E-mail</label>
+                <input type="email" placeholder="Введите ваш email" id="email" name="user_email">
+
+                <label for="password">Пароль</label>
+                <input type="password" placeholder="Введите пароль" id="password" name="user_password">
+                <a href="#" class="standart-text_light-grey">Забыли пароль?</a>-->
+                <button type="submit" class="sumbit-btn sumbit-text">Войти</button>
+            </form>
+        </div>
+    </main>
+    <footer>
+        <div class="none-register">
+            <span class="standart-text_light-grey">У вас уже есть аккаунт?<a href="{% url 'login' %}" class="standart-text go-to-regist">Войдите</a></span>
+        </div>
+    </footer>
+</body>
+</html>
+
+
+<!--<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -12,4 +56,4 @@
         <button type = "submit">Submit</button>
     </form>
 </body>
-</html>
+</html>-->

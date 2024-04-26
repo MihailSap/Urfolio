@@ -1,4 +1,3 @@
-
 /* ШАПКА */
 nav{
     display: flex;
@@ -101,28 +100,23 @@ main{
     gap: 10px;
 }
 
-input[type="text"] + button{
-    height: 30px;
-    border: 2px solid #777E90;
-    border-radius: 5px;
-    padding: 3px 10px 3px 10px;
-    background-color: #dde0e7;
-}
-
-input[type="text"] + button:hover{
-    background-color: #f3f3f3;
-}
-
 .send-filter{
     height: 50px;
+    width: 240px;
     border: 2px solid #777E90;
     border-radius: 10px;
     background-color: #dde0e7;
+    margin: 0 auto;
 }
 
 .send-filter:hover{
     color: #363940;
     background-color: #ededee;
+}
+
+.send-filter:active{
+    color: #363940;
+    background-color: #dadaec;
 }
 
 .project__feed{
@@ -152,6 +146,11 @@ input[type="text"] + button:hover{
 
 .project__title > a:hover{
     color: #777E90;
+}
+
+.typeDate-project{
+    display: flex;
+    gap: 20px;
 }
 
 .project__information{
@@ -209,8 +208,13 @@ footer{
     border: 1px solid black;
     border-radius: 25px;
     font-size: 14px;
+    font-weight: bold;
 }
 
 .footer__button:hover{
     color: #363940;
+}
+
+.footer__button:active{
+    background-color: #CAD1E1;
 }
