@@ -18,17 +18,19 @@
         <div class="login__wrapper">
             <h1>Добро пожаловать!</h1>
             <form class="login" action="{% url 'register' %}" method="post">
-                {{ form }}
+                <label for="{{ form.username.id_for_label }}">Имя пользователя</label>
                 {% csrf_token %}
-                <!--<label for="email">Имя пользователя</label>
-                <input type="text" placeholder="Введите имя пользователя" id="email" name="new_user_name">
-
-                <label for="email">E-mail</label>
-                <input type="email" placeholder="Введите ваш email" id="email" name="user_email">
-
-                <label for="password">Пароль</label>
-                <input type="password" placeholder="Введите пароль" id="password" name="user_password">
-                <a href="#" class="standart-text_light-grey">Забыли пароль?</a>-->
+                {{ form.username }}
+                <label for="{{ form.email.id_for_label }}">E-mail</label>
+                {% csrf_token %}
+                {{ form.email }}
+                <label for="{{ form.password1.id_for_label }}">Введите пароль</label>
+                {% csrf_token %}
+                {{ form.password1 }}
+                <label for="{{ form.password2.id_for_label }}">Подтвердите пароль</label>
+                {% csrf_token %}
+                {{ form.password2 }}
+                <a href="#" class="standart-text_light-grey">Забыли пароль?</a>
                 <button type="submit" class="sumbit-btn sumbit-text">Войти</button>
             </form>
         </div>

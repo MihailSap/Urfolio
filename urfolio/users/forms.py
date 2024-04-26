@@ -6,19 +6,18 @@ from django.utils.translation import gettext_lazy
 User = get_user_model()
 
 class UserCreationForm(UserCreationForm):
-    email = forms.EmailField(
-        label=('Email'),
-        max_length=254,
-        widget=forms.EmailInput(attrs={'autocomplete': 'Email'})
-    )
-
     username = forms.CharField(widget=forms.TextInput(attrs={
         'placeholder': 'Введите имя'
     }))
-    password = forms.CharField(widget=forms.PasswordInput(attrs={
-        'placeholder': 'Введите пароль'
+    email = forms.CharField(widget=forms.TextInput(attrs={
+        'placeholder': 'Введите email'
     }))
-
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={
+        'placeholder': 'Придумайте пароль'
+    }))
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={
+        'placeholder': 'Повторите пароль'
+    }))
     class Meta(UserCreationForm.Meta):
         model = User
         fields = ('username', 'email')
