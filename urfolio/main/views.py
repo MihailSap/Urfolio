@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from django.views.generic import View
+
 from .models import ProjectCategory, Project, ProjectYear, ProjectCourseNumber
 
 def index(request, category_id=None):
@@ -10,3 +12,17 @@ def index(request, category_id=None):
         'categories': ProjectCategory.objects.all()
     }
     return render(request, 'main/main.html', context)
+
+class ProjectDetail(View):
+    def get(self, request, pk):
+        project = Project.objects.get(pk=pk)
+        return render(request, 'main/project_detail.html', {'project': project})
+
+
+
+
+
+
+
+
+

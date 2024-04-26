@@ -1,0 +1,140 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Проект</title>
+    <link rel="stylesheet" href="{% static 'vendor/style/standart.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/style/project.css' %}">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/"><img src="{% static 'vendor/assets/img/logo.png' %}" class="logo" alt="Логотип"></a>
+            <div class="user-profile user__text_DM-sans">
+                {% if user.is_authenticated %}
+                    <form action="{% url 'logout' %}" method="post">
+                        {% csrf_token %}
+                        <button class="nick-name" type="submit">Выйти</button>
+                    </form>
+                {% else %}
+                    <form action="{% url 'login' %}" method="get">
+                        {% csrf_token %}
+                        <button class="nick-name" type="submit">Войти</button>
+                    </form>
+                {% endif %}
+                <a href="" id="profile-link" class="user-profile__link user__text_DM-sans">
+                    <p class="nick-name" id="user-name">
+                        {% if user.is_authenticated %}
+                            {{ user }}
+                        {% endif %}
+                    </p>
+                    <div class="user-avatar"></div>
+                </a>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div class="project__card">
+            <a href="#" id="user-project__link"><img src="{{ project.image.url }}" class="project-img" alt="Привью проекта" id="project-photo"></a>
+            <div class="project-info__wrapper">
+                <div class="project__title">
+                    <a href="#" id="user-project__link">
+                        <h1 id="name-progect">{{ project.name }}</h1>
+                    </a>
+                    <div class="typeDate-project">
+                        <span id="type-project">Тип проекта</span><span id="project-date">2023-2024</span>
+                    </div>
+                    <p class="progect__description"><b>Описание проекта</b><br> <span id="progect__description">{{ project.description }}</span></p>
+                </div>
+                <div class="project__information">
+                    <div class="project__rating">
+                        <div class="like__wrapper">
+                            <button type="button" class="info__rating-project" id="like-button">
+                                <svg id="like-icon" width="43" height="38" viewBox="0 0 43 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M21.4021 38L18.2988 35.2665C7.27672 25.5956 0 19.2174 0 11.3896C0 5.01144 5.17932 0 11.7712 0C15.4951 0 19.0693 1.67738 21.4021 4.32807C23.735 1.67738 27.3091 0 31.0331 0C37.6249 0 42.8043 5.01144 42.8043 11.3896C42.8043 19.2174 35.5275 25.5956 24.5054 35.2872L21.4021 38Z" fill="#CAD1E1"/>
+                                </svg>
+                                <span class="activities-number" id="like-number">0</span>
+                            </button>
+                        </div>
+                        <div class="info__rating-project">
+                            <button type="button" id="share"><img src="{% static 'vendor/assets/img/Share.png' %}" alt="Иконка поделиться"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="project-gallery">
+            <button id="left_btn">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M17.9091 15.2652C17.5032 14.8906 16.8706 14.9159 16.496 15.3217L13.2652 18.8217C12.9116 19.2047 12.9116 19.7952 13.2652 20.1782L16.496 23.6783C16.8706 24.0841 17.5032 24.1094 17.909 23.7348C18.3149 23.3602 18.3402 22.7276 17.9656 22.3217L16.284 20.5L26 20.5C26.5523 20.5 27 20.0523 27 19.5C27 18.9477 26.5523 18.5 26 18.5L16.284 18.5L17.9656 16.6783C18.3402 16.2725 18.3149 15.6398 17.9091 15.2652Z" fill="#777E90"/>
+                </svg>
+            </button>
+            <div class="gallery-feed">
+                <!-- НЕ КРУТЯТСЯ!!! -->
+                <img src="{{ project.image.url }}" class="see-img" alt="">
+                <img src="{{ project.image.url }}" class="see-img" alt="">
+                <img src="{{ project.image.url }}" class="see-img" alt="">
+
+                <!--<img src="../assets/img/logo.png" width="384" height="270" class="see-img" alt=""> ЗАЧЕМ ЗДЕСЬ ЛОГОТИП???-->
+            </div>
+            <button id="right_btn">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M22.0909 15.2652C22.4968 14.8906 23.1294 14.9159 23.504 15.3217L26.7348 18.8217C27.0884 19.2047 27.0884 19.7952 26.7348 20.1782L23.504 23.6783C23.1294 24.0841 22.4968 24.1094 22.091 23.7348C21.6851 23.3602 21.6598 22.7276 22.0344 22.3217L23.716 20.5L14 20.5C13.4477 20.5 13 20.0523 13 19.5C13 18.9477 13.4477 18.5 14 18.5L23.716 18.5L22.0344 16.6783C21.6598 16.2725 21.6851 15.6398 22.0909 15.2652Z" fill="#777E90"/>
+                </svg>
+            </button>
+        </div>
+
+        <div class="comments__wrapper">
+            <div class="comments">
+                <div class="input-comments">
+                    <form action="post">
+                        <input type="text" placeholder="Поделитесь своим мнением">
+                        <button class="sumbit-btn sumbit-text">Отправить <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M9.394 4.84355C9.66455 4.59382 10.0863 4.61068 10.3361 4.88123L12.4899 7.21454C12.7256 7.46991 12.7256 7.86353 12.4899 8.11891L10.3361 10.4523C10.0863 10.7228 9.66456 10.7397 9.39401 10.49C9.12346 10.2402 9.10659 9.81845 9.35632 9.5479L10.4774 8.33339L4.00004 8.33339C3.63185 8.33339 3.33337 8.03492 3.33337 7.66673C3.33337 7.29854 3.63185 7.00006 4.00004 7.00006L10.4774 7.00006L9.35633 5.78561C9.10659 5.51506 9.12346 5.09329 9.394 4.84355Z" fill="white"/>
+                            </svg>
+                            </button>
+                    </form>
+                </div>
+                <h2>2 комментария</h2>
+                <div class="user-comments" id="user-comments">
+                    <div class="user-img">
+                        <img src="" id="user-img" alt="">
+                    </div>
+                    <div class="comment-text__wrapper">
+                        <div class="user-text">
+                            <h4 id="user-name">User1</h4>
+                            <p class="user-comment">Текст комментария</p>
+                        </div>
+                        <div class="comment-info">
+                            <span id="time-comment">около 1 часа назад</span>
+                            <span id="answer_to_comment" class="answer">Ответить</span>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="answer-comments" id="answer_comments">
+                    <div class="user-img">
+                        <img src="" id="user-img" alt="">
+                    </div>
+                    <div class="comment-text__wrapper">
+                        <div class="user-text">
+                            <h4 id="user-name">User1</h4>
+                            <p class="user-comment">Текст комментария</p>
+                        </div>
+                        <div class="comment-info">
+                            <span id="time-comment" class="time standart-text_light-grey">около 1 часа назад</span>
+                            <span id="answer_to_comment" class="answer">Ответить</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button id="more_comments" class="user__text_DM-sans">Ещё комментарии</button>
+        </div>
+    </main>
+
+    <script src="../js/project.js" defer></script>
+</body>
+</html>

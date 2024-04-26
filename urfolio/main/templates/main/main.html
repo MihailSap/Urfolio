@@ -174,7 +174,7 @@
                             <p class="progect__description"><b>Описание проекта</b><br> <span id="progect__description">{{ project.description }}</span></p>
                         </div>
                         <div class="project__information">
-                            <a href="../html/">Подробнее</a>
+                            <a href="{{ project.id }}">Подробнее</a>
                             <div class="project__rating">
                                 <div class="like__wrapper">
                                     <button type="button" class="info__rating-project" id="like-button"><img src="{% static 'vendor/assets/img/Likes.png' %}" id="like-icon" alt="Иконка лайка"><span class="activities-number" id="like-number">0</span></button>

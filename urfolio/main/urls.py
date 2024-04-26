@@ -10,4 +10,16 @@ urlpatterns = [
     path('category/<int:category_id>/', views.index, name='category'),
     path('category/<int:year_id>/', views.index, name='year'),
     path('category/<int:course_number_id>/', views.index, name='course_number'),
+    path('<int:pk>', views.ProjectDetail.as_view(), name='project_detail'),
 ]
+
+
+
+
+
+
+
+
+
+
+
