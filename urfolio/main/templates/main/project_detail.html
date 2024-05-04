@@ -14,6 +14,10 @@
         <nav>
             <a href="/"><img src="{% static 'vendor/assets/img/logo.png' %}" class="logo" alt="Логотип"></a>
             <div class="user-profile user__text_DM-sans">
+                {% if object.author == user %}
+                    <a href="{% url 'projects:project_update' object.id %}">Редактировать</a>
+                    <a href="{% url 'projects:project_delete' object.id %}">Удалить</a>
+                {% endif %}
                 {% if user.is_authenticated %}
                     <form action="{% url 'logout' %}" method="post">
                         {% csrf_token %}
@@ -38,7 +42,7 @@
     </header>
     <main>
         <div class="project__card">
-            <a href="#" id="user-project__link"><img src="{{ project.image.url }}" class="project-img" alt="Привью проекта" id="project-photo"></a>
+            <a href="#" id="user-project__link"><img src="{% static 'vendor/assets/img/project-photo.png' %}" class="project-img" alt="Привью проекта" id="project-photo"></a>
             <div class="project-info__wrapper">
                 <div class="project__title">
                     <a href="#" id="user-project__link">
@@ -49,6 +53,9 @@
                     </div>
                     <p class="progect__description"><b>Описание проекта</b><br> <span id="progect__description">{{ project.description }}</span></p>
                 </div>
+
+
+
                 <div class="project__information">
                     <div class="project__rating">
                         <div class="like__wrapper">
@@ -74,9 +81,9 @@
             </button>
             <div class="gallery-feed">
                 <!-- НЕ КРУТЯТСЯ!!! -->
-                <img src="{{ project.image.url }}" class="see-img" alt="">
-                <img src="{{ project.image.url }}" class="see-img" alt="">
-                <img src="{{ project.image.url }}" class="see-img" alt="">
+                <img src="{% static 'vendor/assets/img/project-photo.png' %}" class="see-img" alt="">
+                <img src="{% static 'vendor/assets/img/project-photo.png' %}" class="see-img" alt="">
+                <img src="{% static 'vendor/assets/img/project-photo.png' %}" class="see-img" alt="">
 
                 <!--<img src="../assets/img/logo.png" width="384" height="270" class="see-img" alt=""> ЗАЧЕМ ЗДЕСЬ ЛОГОТИП???-->
             </div>

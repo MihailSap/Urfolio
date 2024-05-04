@@ -15,6 +15,7 @@
             <a href="/"><img src="{% static 'vendor/assets/img/logo.png' %}" class="logo" alt="Логотип"></a>
             <div class="user-profile user__text_DM-sans">
                 {% if user.is_authenticated %}
+                    <a href="{% url 'projects:project_create' %}">Добавить</a>
                     <form action="{% url 'logout' %}" method="post">
                         {% csrf_token %}
                         <button class="nick-name" type="submit">Выйти</button>
@@ -164,7 +165,7 @@
             <div class="project__feed">
                 {% for project in projects %}
                 <div class="feed__item">
-                    <a href="#" id="user-project__link"><img src="{{ project.image.url }}" alt="Привью проекта" id="project-photo"></a>
+                        <a href="#" id="user-project__link"><img src="{% static 'vendor/assets/img/project-photo.png' %}" alt="Привью проекта" id="project-photo"></a>
                     <div class="project__card">
                         <div class="project__title">
                             <a href="#" id="user-project__link">
