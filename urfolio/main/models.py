@@ -30,11 +30,15 @@ class Project(models.Model):
     description = models.TextField(null=True, blank=True)
     date_publication = models.DateField(default= datetime.date.today)
 
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    likes = models.ManyToManyField(User, related_name='likes')
 
     category = models.ForeignKey(to=ProjectCategory, on_delete=models.CASCADE)
     year = models.ForeignKey(to=ProjectYear, on_delete=models.CASCADE)
     course_number = models.ForeignKey(to=ProjectCourseNumber, on_delete=models.CASCADE)
+
+    def total_likes(self):
+        return self.likes.count() # ??? почему подчёркнуто
     def __str__(self):
         return self.name
 

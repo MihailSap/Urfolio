@@ -1,11 +1,19 @@
+from django.urls import reverse
 from .models import ProjectCategory, Project, ProjectYear, ProjectCourseNumber
 from django.contrib.auth.mixins import UserPassesTestMixin
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponseRedirect
 from django.views.generic import (
     ListView, DetailView,
     CreateView, UpdateView,
     DeleteView
 )
+
+def LikeView(request, pk):
+    project = get_object_or_404(Project, id=request.POST.get('project_id'))
+    project.likes.add(request.user)
+    return HttpResponseRedirect(reverse('projects:project_detail', args=[str(pk)]))
+
 
 
 def index(request, category_id=None):
@@ -20,6 +28,13 @@ def index(request, category_id=None):
 
 class ProjectDetailView(DetailView): # Так правильнее
     model = Project
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(ProjectDetailView, self).get_context_data(*args, **kwargs)
+        stuff = get_object_or_404(Project, id=self.kwargs['pk'])
+        total_likes = stuff.total_likes()
+        context['total_likes'] = total_likes
+        return context
 
 class ProjectCreateView(CreateView):
     model = Project

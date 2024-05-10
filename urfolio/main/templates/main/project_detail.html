@@ -94,6 +94,19 @@
             </button>
         </div>
 
+
+
+
+
+        <form action="{% url 'projects:like_project' project.pk %}" method="POST">
+            {% csrf_token %}
+            <button type = "submit", name="project_id", value="{{ project.id }}">Like</button> - {{ total_likes }} Likes
+        </form>
+
+
+
+
+
         <div class="comments__wrapper">
             <div class="comments">
                 <div class="input-comments">
@@ -142,6 +155,6 @@
         </div>
     </main>
 
-    <script src="../js/project.js" defer></script>
+    <script src="{% static 'vendor/js/project.js' %}" defer></script>
 </body>
 </html>
