@@ -4,7 +4,7 @@ from . import views
 from .views import (
     ProjectListView, ProjectCreateView,
     ProjectDetailView, ProjectUpdateView,
-    ProjectDeleteView, LikeView
+    ProjectDeleteView, LikeView,
 )
 
 app_name = 'projects'

@@ -9,6 +9,7 @@ from django.views.generic import (
     DeleteView
 )
 
+# ФУНКЦИЯ ДОБАВЛЕНИЯ ЛАЙКОВ
 def LikeView(request, pk):
     project = get_object_or_404(Project, id=request.POST.get('project_id'))
 
@@ -31,6 +32,7 @@ def index(request, category_id=None):
     }
     return render(request, 'main/main.html', context)
 
+# ОТОБРАЖЕНИЕ ПРОЕКТА НА ОТДЕЛЬНОЙ СТРАНИЦЕ
 class ProjectDetailView(DetailView): # Так правильнее
     model = Project
 
@@ -49,6 +51,7 @@ class ProjectDetailView(DetailView): # Так правильнее
         context['is_liked'] = is_liked
         return context
 
+# СОЗДАНИЕ ПРОЕКТА
 class ProjectCreateView(CreateView):
     model = Project
     fields = ['image', 'name', 'description', 'category', 'year', 'course_number']
@@ -57,6 +60,7 @@ class ProjectCreateView(CreateView):
         form.instance.author = self.request.user
         return super().form_valid(form)
 
+# РЕДАКТИРОВАНЕ ПРОФИЛЯ
 class ProjectUpdateView(UserPassesTestMixin, UpdateView):
     model = Project
     fields = ['image', 'name', 'description', 'category', 'year', 'course_number']
@@ -71,12 +75,17 @@ class ProjectUpdateView(UserPassesTestMixin, UpdateView):
             return True
         return False
 
+# ОТОБРАЖЕНИЕ ПРОЕКТА НА ОБЩЕЙ СТРАНИЦЕ
 class ProjectListView(ListView):
     model = Project
     template_name = 'main/main.html' #<app>/<model>_<viewtype>.html
     context_object_name = 'projects'
+    paginate_by = 3 # СКОЛЬКО ПРОЕКТОВ ПОКАЗЫВАТЬ НА ОДНОЙ СТРАНИЦЕ
     #ordering = ['-date_posted'] - не рабочий способ сортировки по дате публикации
 
+
+
+# УДАЛЕНИЕ ПРОЕКТА
 class ProjectDeleteView(UserPassesTestMixin, DeleteView): # Так правильнее
     model = Project
     success_url = '/'

@@ -182,7 +182,7 @@
                                     <form action="{% url 'projects:like_project' project.pk %}" method="POST">
                                         {% csrf_token %}
                                         {% if user.is_authenticated %}
-                                            {% if user in project.likes %}
+                                            {% if is_liked %}
                                                 <button class = "info__rating-project" type = "submit", name="project_id", value="{{ project.id }}">
                                                     <img src="{% static 'vendor/assets/img/red-likes.svg' %}" alt="">
                                                     <span class="activities-number info__rating-project" id="like-number">{{ project.total_likes }}</span>
@@ -217,8 +217,24 @@
     </main>
     <footer>
         <button class="footer__button user__text_DM-sans" type="button">Ещё проекты <span id="still-projects">(60+)</span></button>
+        {% if is_paginated %}
+            {% if page_obj.has_previous %}
+                <a href="?page=1">First</a>
+                <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+            {% endif %}
+            {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                    <a href="?page={{ num }}">{{ num }}</a>
+                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                    <a href="?page={{ num }}">{{ num }}</a>
+                {% endif %}
+            {% endfor %}
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">Next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+            {% endif %}
+        {% endif %}
     </footer>
-
     <script src="{% static 'vendor/js/main.js' %}" defer></script>
 </body>
 </html>
