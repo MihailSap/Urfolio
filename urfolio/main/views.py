@@ -11,10 +11,15 @@ from django.views.generic import (
 
 def LikeView(request, pk):
     project = get_object_or_404(Project, id=request.POST.get('project_id'))
-    project.likes.add(request.user)
+
+    is_liked = False
+    if project.likes.filter(id=request.user.id).exists():
+        project.likes.remove(request.user)
+        is_liked = False
+    else:
+        project.likes.add(request.user)
+        is_liked = True
     return HttpResponseRedirect(reverse('projects:project_detail', args=[str(pk)]))
-
-
 
 def index(request, category_id=None):
     projects = Project.objects.filter(category_id=category_id) if category_id else Project.objects.all()
@@ -30,10 +35,18 @@ class ProjectDetailView(DetailView): # Так правильнее
     model = Project
 
     def get_context_data(self, *args, **kwargs):
+
         context = super(ProjectDetailView, self).get_context_data(*args, **kwargs)
+
         stuff = get_object_or_404(Project, id=self.kwargs['pk'])
         total_likes = stuff.total_likes()
+
+        is_liked = False
+        if stuff.likes.filter(id=self.request.user.id).exists():
+            is_liked = True
+
         context['total_likes'] = total_likes
+        context['is_liked'] = is_liked
         return context
 
 class ProjectCreateView(CreateView):
