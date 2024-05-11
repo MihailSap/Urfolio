@@ -52,6 +52,7 @@
                         <span id="type-project">Тип проекта</span><span id="project-date">2023-2024</span>
                     </div>
                     <p class="progect__description"><b>Описание проекта</b><br> <span id="progect__description">{{ project.description }}</span></p>
+                    <p>Author: {{ project.author }}</p>
                 </div>
 
 
@@ -115,32 +116,47 @@
         <div class="comments__wrapper">
             <div class="comments">
                 <div class="input-comments">
-                    <form action="post">
-                        <input type="text" placeholder="Поделитесь своим мнением">
+                    {% if user.is_authenticated %}
+                    <form action="{% url 'projects:comment-sent' project.id %}" method="POST">
+                        {% csrf_token %}
+                        {{ commentform }}
+                        <!--<input type="text" placeholder="Поделитесь своим мнением">-->
                         <button class="sumbit-btn sumbit-text">Отправить <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M9.394 4.84355C9.66455 4.59382 10.0863 4.61068 10.3361 4.88123L12.4899 7.21454C12.7256 7.46991 12.7256 7.86353 12.4899 8.11891L10.3361 10.4523C10.0863 10.7228 9.66456 10.7397 9.39401 10.49C9.12346 10.2402 9.10659 9.81845 9.35632 9.5479L10.4774 8.33339L4.00004 8.33339C3.63185 8.33339 3.33337 8.03492 3.33337 7.66673C3.33337 7.29854 3.63185 7.00006 4.00004 7.00006L10.4774 7.00006L9.35633 5.78561C9.10659 5.51506 9.12346 5.09329 9.394 4.84355Z" fill="white"/>
                             </svg>
                             </button>
                     </form>
+                    {% else %}
+                        <p><a href="{% url 'login' %}">Войдите, </a>чтобы оставить комментарий</p>
+                    {% endif %}
                 </div>
-                <h2>2 комментария</h2>
+                {% if project.comments.count %}
+                    <h2>Количество комментариев: {{ project.comments.count }}</h2>
+                {% else %}
+                    <h2>Комментариев ещё нет</h2>
+                {% endif %}
+                {% for comment in project.comments.all %}
                 <div class="user-comments" id="user-comments">
                     <div class="user-img">
                         <img src="" id="user-img" alt="">
                     </div>
                     <div class="comment-text__wrapper">
                         <div class="user-text">
-                            <h4 id="user-name">User1</h4>
-                            <p class="user-comment">Текст комментария</p>
+                            <h4 id="user-name">{{ comment.author.username }}</h4>
+                            <p class="user-comment">{{ comment.body }}</p>
                         </div>
                         <div class="comment-info">
-                            <span id="time-comment">около 1 часа назад</span>
+                            <span id="time-comment">{{ comment.created }}</span>
                             <span id="answer_to_comment" class="answer">Ответить</span>
+                            {% if user.is_authenticated and comment.author == user %}
+                                <a href="{% url 'projects:comment-delete' comment.id %}">Delete</a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
+
                 <hr>
-                <div class="answer-comments" id="answer_comments">
+                <!--<div class="answer-comments" id="answer_comments">
                     <div class="user-img">
                         <img src="" id="user-img" alt="">
                     </div>
@@ -154,7 +170,8 @@
                             <span id="answer_to_comment" class="answer">Ответить</span>
                         </div>
                     </div>
-                </div>
+                </div>-->
+                {% endfor %}
             </div>
             <button id="more_comments" class="user__text_DM-sans">Ещё комментарии</button>
         </div>

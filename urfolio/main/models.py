@@ -1,8 +1,12 @@
+import uuid
+
 from django.db import models
 import datetime
 
 from django.urls import reverse
 from users.models import User # Оно только так и работает, несмотря на красный
+
+
 
 
 
@@ -44,3 +48,33 @@ class Project(models.Model):
 
     def get_absolute_url(self):
         return reverse('projects:project_detail', kwargs={'pk': self.pk})
+
+class Comment(models.Model):
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='comments')
+    parent_project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='comments')
+    body = models.CharField(max_length=150)
+    created = models.DateTimeField(auto_now_add=True)
+    id = models.CharField(max_length=100, default=uuid.uuid4, unique=True, primary_key = True, editable=False)
+
+    def __str__(self):
+        try:
+            return f'{self.author.username} : {self.body[:30]}'
+        except:
+            return f'no author : {self.body[:30]}'
+
+    class Meta:
+        ordering = ['-created']
+
+
+
+
+
+
+
+
+
+
+
+
+
+
