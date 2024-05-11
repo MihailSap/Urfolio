@@ -3,7 +3,7 @@ from django.urls import reverse
 from .forms import CommentCreateForm, ReplyCreateForm
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from .models import (
     ProjectCategory, Project,
     ProjectYear, ProjectCourseNumber,
@@ -16,7 +16,7 @@ from django.views.generic import (
 )
 
 # ФУНКЦИЯ ДОБАВЛЕНИЯ ЛАЙКОВ
-def LikeView(request, pk):
+def LikeView(request, pk): # OLD
     project = get_object_or_404(Project, id=request.POST.get('project_id'))
 
     is_liked = False
@@ -27,6 +27,17 @@ def LikeView(request, pk):
         project.likes.add(request.user)
         is_liked = True
     return HttpResponseRedirect(reverse('projects:project_detail', args=[str(pk)]))
+
+def like_project(request, pk):
+    project = get_object_or_404(Project, id=pk)
+    user_exist = project.slikess.filter(username=request.user.username).exists()
+    if project.author != request.user:
+        if user_exist:
+            project.slikess.remove(request.user)
+        else:
+            project.slikess.add(request.user)
+    return render(request, 'snippets/likes.html', {'project': project})
+
 
 def index(request, category_id=None):
     projects = Project.objects.filter(category_id=category_id) if category_id else Project.objects.all()
@@ -136,10 +147,9 @@ class ProjectUpdateView(UserPassesTestMixin, UpdateView):
 # ОТОБРАЖЕНИЕ ПРОЕКТА НА ОБЩЕЙ СТРАНИЦЕ
 class ProjectListView(ListView):
     model = Project
-    template_name = 'main/main.html' #<app>/<model>_<viewtype>.html
+    template_name = 'main/main.html'
     context_object_name = 'projects'
     paginate_by = 3 # СКОЛЬКО ПРОЕКТОВ ПОКАЗЫВАТЬ НА ОДНОЙ СТРАНИЦЕ
-    #ordering = ['-date_posted'] - не рабочий способ сортировки по дате публикации
 
 
 

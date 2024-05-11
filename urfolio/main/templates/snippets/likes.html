@@ -1,0 +1,23 @@
+{% load static %}
+
+<div class="like__wrapper">
+    {% if user.is_authenticated and user != project.author %}
+        <a
+        hx-get="{% url 'projects:like-project' project.id %}"
+        hx-target="closest div"
+        hx-swap="outerHTML">
+            {% if user in project.slikess.all %}
+                <img src="{% static 'vendor/assets/img/red-likes.svg' %}">
+            {% else %}
+                <img src="{% static 'vendor/assets/img/Likes.png' %}">
+            {% endif %}
+        </a>
+    {% elif user.is_authenticated == False %}
+        <a href="{% url 'login' %}"><img src="{% static 'vendor/assets/img/Likes.png' %}"></a>
+    {% else %}
+        <img src="{% static 'vendor/assets/img/Likes.png' %}">
+    {% endif %}
+    {% if project.slikess.count %}
+        {{ project.slikess.count }}
+    {% endif %}
+</div>

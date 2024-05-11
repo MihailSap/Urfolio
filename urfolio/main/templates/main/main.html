@@ -8,6 +8,7 @@
     <title>Urfolio</title>
     <link rel="stylesheet" href="{% static 'vendor/style/main.css' %}">
     <link rel="stylesheet" href="{% static 'vendor/style/standart.css' %}">
+    <script src="https://unpkg.com/htmx.org@1.9.12"></script>
 </head>
 <body>
     <header>
@@ -176,31 +177,10 @@
                             <p class="progect__description"><b>Описание проекта</b><br> <span id="progect__description">{{ project.description }}</span></p>
                         </div>
                         <div class="project__information">
-                            <a href="{{ project.id }}">Подробнее {{ total_likes }}</a>
+                            <a href="{{ project.id }}">Подробнее</a>
                             <div class="project__rating">
                                 <div class="like__wrapper">
-                                    <form action="{% url 'projects:like_project' project.pk %}" method="POST">
-                                        {% csrf_token %}
-                                        {% if user.is_authenticated %}
-                                            {% if is_liked %}
-                                                <button class = "info__rating-project" type = "submit", name="project_id", value="{{ project.id }}">
-                                                    <img src="{% static 'vendor/assets/img/red-likes.svg' %}" alt="">
-                                                    <span class="activities-number info__rating-project" id="like-number">{{ project.total_likes }}</span>
-                                                </button>
-                                            {% else %}
-                                                <button class = "info__rating-project" type = "submit", name="project_id", value="{{ project.id }}">
-                                                    <img src="{% static 'vendor/assets/img/Likes.png' %}" alt="">
-                                                    <span class="activities-number info__rating-project" id="like-number">{{ project.total_likes }}</span>
-                                                </button>
-                                            {% endif %}
-                                        {% else %}
-                                            <a href="{% url 'login' %}">
-                                                <img src="{% static 'vendor/assets/img/Likes.png' %}" alt="">
-                                                <span class="activities-number info__rating-project" id="like-number">{{ project.total_likes }}</span>
-                                            </a>
-                                        {% endif %}
-
-                            </form>
+                                    {% include 'snippets/likes.html' %}
                                     <!--<button type="button" class="info__rating-project" id="like-button"><img src="{#% static 'vendor/assets/img/Likes.png' %#}" id="like-icon" alt="Иконка лайка"><span class="activities-number" id="like-number">0</span></button>-->
                                 </div>
                                 <div class="info__rating-project">

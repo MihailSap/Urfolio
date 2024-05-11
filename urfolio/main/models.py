@@ -36,6 +36,7 @@ class Project(models.Model):
 
     author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     likes = models.ManyToManyField(User, related_name='likes')
+    slikess = models.ManyToManyField(User, related_name='likedposts', through='LikedPost')
 
     category = models.ForeignKey(to=ProjectCategory, on_delete=models.CASCADE)
     year = models.ForeignKey(to=ProjectYear, on_delete=models.CASCADE)
@@ -48,6 +49,14 @@ class Project(models.Model):
 
     def get_absolute_url(self):
         return reverse('projects:project_detail', kwargs={'pk': self.pk})
+
+
+class LikedPost(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    date_posted = models.DateField(default=datetime.date.today)
+    def __str__(self):
+        return f'{self.user.username} : {self.project.name}'
 
 class Comment(models.Model):
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='comments')
