@@ -156,21 +156,32 @@
                 </div>
 
                 <hr>
-                <!--<div class="answer-comments" id="answer_comments">
+                    {% for reply in comment.replies.all %}
+                <div class="answer-comments" id="answer_comments">
                     <div class="user-img">
                         <img src="" id="user-img" alt="">
                     </div>
                     <div class="comment-text__wrapper">
+
                         <div class="user-text">
-                            <h4 id="user-name">User1</h4>
-                            <p class="user-comment">Текст комментария</p>
+                            <h4 id="user-name">{{ reply.author.username }}</h4>
+                            <p class="user-comment">{{ reply.body }}</p>
                         </div>
                         <div class="comment-info">
-                            <span id="time-comment" class="time standart-text_light-grey">около 1 часа назад</span>
+                            <span id="time-comment" class="time standart-text_light-grey">{{ reply.created }}</span>
                             <span id="answer_to_comment" class="answer">Ответить</span>
+                            {% if user.is_authenticated and comment.author == user %}
+                                <a href="{% url 'projects:reply-delete' reply.id %}">Delete</a>
+                            {% endif %}
                         </div>
                     </div>
-                </div>-->
+                </div>
+                        {% endfor %}
+                    <form method="POST" autocomplete="off" action="{% url 'projects:reply-sent' comment.id %}">
+                        {% csrf_token %}
+                        {{ replyform }}
+                        <button type="submit">Submit</button>
+                    </form>
                 {% endfor %}
             </div>
             <button id="more_comments" class="user__text_DM-sans">Ещё комментарии</button>

@@ -1,10 +1,14 @@
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
-from .forms import CommentCreateForm
-from .models import ProjectCategory, Project, ProjectYear, ProjectCourseNumber, Comment
+from .forms import CommentCreateForm, ReplyCreateForm
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect
+from .models import (
+    ProjectCategory, Project,
+    ProjectYear, ProjectCourseNumber,
+    Comment, Reply
+)
 from django.views.generic import (
     ListView, DetailView,
     CreateView, UpdateView,
@@ -41,13 +45,18 @@ class ProjectDetailView(DetailView): # Так правильнее
     def get_context_data(self, *args, **kwargs):
         context = super(ProjectDetailView, self).get_context_data(*args, **kwargs)
         stuff = get_object_or_404(Project, id=self.kwargs['pk'])
-        commentform = CommentCreateForm()
+
         total_likes = stuff.total_likes()
+        commentform = CommentCreateForm()
+        replyform = ReplyCreateForm()
+
         is_liked = False
         if stuff.likes.filter(id=self.request.user.id).exists():
             is_liked = True
+
         context['project'] = stuff
         context['commentform'] = commentform
+        context['replyform'] = replyform
         context['total_likes'] = total_likes
         context['is_liked'] = is_liked
         return context
@@ -63,9 +72,21 @@ def comment_sent(request, pk):
         if form.is_valid(): # ??
             comment = form.save(commit=False)
             comment.author = request.user
-            comment.parent_project = project ## parent_post или parent_project???
+            comment.parent_project = project
             comment.save()
     return redirect('projects:project_detail', project.id) # или pk=project.id
+
+@login_required
+def reply_sent(request, pk):
+    comment = get_object_or_404(Comment, id=pk)
+    if request.method == 'POST':
+        form = ReplyCreateForm(request.POST)
+        if form.is_valid(): # ??
+            reply = form.save(commit=False)
+            reply.author = request.user
+            reply.parent_comment = comment
+            reply.save()
+    return redirect('projects:project_detail', comment.parent_project.id) # или pk=project.id
 
 
 @login_required
@@ -77,6 +98,16 @@ def comment_delete_view(request, pk):
         return redirect('projects:project_detail', comment.parent_project.id)
 
     return render(request, 'main/comment_delete.html', {'comment': comment})
+
+@login_required
+def reply_delete_view(request, pk):
+    reply = get_object_or_404(Reply, id=pk, author=request.user)
+
+    if request.method == "POST":
+        reply.delete()
+        return redirect('projects:project_detail', reply.parent_comment.parent_project.id)
+
+    return render(request, 'main/comment_delete.html', {'reply': reply})
 
 # СОЗДАНИЕ ПРОЕКТА
 class ProjectCreateView(CreateView):
