@@ -12,7 +12,7 @@ from .views import (
 app_name = 'projects'
 
 urlpatterns = [
-    path('', ProjectListView.as_view(), name='index'),
+    #path('', ProjectListView.as_view(), name='index'),
     path('', include('django.contrib.auth.urls')),
     path('<int:pk>/', ProjectDetailView.as_view(), name='project_detail'),
     path('<pk>/like/', like_project, name='like-project'),
@@ -27,11 +27,7 @@ urlpatterns = [
     path('reply-sent/<pk>', reply_sent, name='reply-sent'),
     path('reply/delete/<pk>', reply_delete_view, name='reply-delete'),
 
-    # Фильтры - нужны?
-    #path('', views.index, name='index'),
-    #path('category/<int:category_id>/', views.index, name='category'),
-    #path('category/<int:year_id>/', views.index, name='year'),
-    #path('category/<int:course_number_id>/', views.index, name='course_number'),
+    path('', views.index, name='index1'), ##### !!!!
 ]
 
 

@@ -1,0 +1,96 @@
+header{
+    text-align: center;
+}
+
+
+.profile-avatar{
+    margin-right: 10%;
+}
+
+/* .profile-avatar > img{
+
+} */
+
+.profile-info{
+    display: flex;
+    justify-content: center;
+    width: 80vw;
+    margin: 0 auto;
+    margin-top: 50px;
+}
+
+.user-info{
+    display: flex;
+    width: 50%;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.user-info__top{
+    display: flex;
+    justify-content: space-between;
+}
+
+.user-description{
+    width: 80%;
+}
+
+.description{
+    height: 116px;
+    overflow-y: hidden;
+}
+
+.user-project__wrapper{
+    width: 80vw;
+    margin: 0 auto;
+}
+
+.user-project{
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+}
+
+
+.profile-list{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+}
+
+.list-project{
+    display: none;
+    margin-top: 50px;
+    margin-bottom: 25px;
+}
+
+.list-project > li{
+    display: flex;
+    justify-content: space-between;
+}
+
+.interaction-project > a:not(:last-child){
+    display: flex;
+    display: inline-block;
+    margin-right: 10vw;
+}
+
+.interaction-project > a:last-child{
+    margin-right: 3vw;
+}
+
+.interaction-project > p{
+    display: inline-block;
+    margin-right: 10vw;
+}
+
+.interaction-project > p:last-child{
+    margin-right: 3vw;
+}
+
+.sumbit-btn{
+    text-align: center;
+    width: 25vw;
+    margin: 0 auto;
+}

@@ -16,18 +16,18 @@
             <a href="/"><img src="{% static 'vendor/assets/img/logo.png' %}" class="logo" alt="Логотип"></a>
             <div class="user-profile user__text_DM-sans">
                 {% if object.author == user %}
-                    <a href="{% url 'projects:project_update' object.id %}">Редактировать</a>
-                    <a href="{% url 'projects:project_delete' object.id %}">Удалить</a>
+                    <a href="{% url 'projects:project_update' object.id %}"><span class="interaction-profile__text">Редактировать проект</span></a>
+                    <a href="{% url 'projects:project_delete' object.id %}"><span class="interaction-profile__text">Удалить</span></a>
                 {% endif %}
                 {% if user.is_authenticated %}
                     <form action="{% url 'logout' %}" method="post">
                         {% csrf_token %}
-                        <button class="nick-name" type="submit">Выйти</button>
+                        <button class="nick-name" type="submit"><span class="interaction-profile__text">Выйти</span></button>
                     </form>
                 {% else %}
                     <form action="{% url 'login' %}" method="get">
                         {% csrf_token %}
-                        <button class="nick-name" type="submit">Войти</button>
+                        <button class="nick-name" type="submit"><span class="interaction-profile__text">Войти</span></button>
                     </form>
                 {% endif %}
                 <a href="" id="profile-link" class="user-profile__link user__text_DM-sans">

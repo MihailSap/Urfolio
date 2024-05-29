@@ -239,3 +239,10 @@ input:focus{
 .comments__wrapper > button:active{
     background-color: #c3bebe;
 }
+
+/* НС */
+.input-comments:not(:first-of-type){
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+/* НК */

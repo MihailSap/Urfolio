@@ -1,7 +1,6 @@
 from django.contrib import admin
 from .models import (
-    Project, ProjectCategory,
-    ProjectYear, ProjectCourseNumber,
+    Project,
     Comment, Reply, LikedPost,
 )
 
@@ -15,9 +14,5 @@ admin.site.register(Reply)
 # ЛАЙКИ
 admin.site.register(LikedPost)
 
-# СТАРЫЕ ФИЛЬТРЫ
-admin.site.register(ProjectCategory)
-admin.site.register(ProjectYear)
-admin.site.register(ProjectCourseNumber)
 
 

@@ -2,7 +2,8 @@
 
 <div class="like__wrapper">
     {% if user.is_authenticated and user != project.author %}
-        <a
+        <!-- УБРАТЬ, ЕСЛИ ЧТО -->
+        <a href = ""
         hx-get="{% url 'projects:like-project' project.id %}"
         hx-target="closest div"
         hx-swap="outerHTML">

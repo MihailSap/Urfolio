@@ -1,12 +1,13 @@
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
+
+from .filters import ProjectFilter
 from .forms import CommentCreateForm, ReplyCreateForm
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect, HttpResponse
 from .models import (
-    ProjectCategory, Project,
-    ProjectYear, ProjectCourseNumber,
+    Project,
     Comment, Reply
 )
 from django.views.generic import (
@@ -39,13 +40,11 @@ def like_project(request, pk):
     return render(request, 'snippets/likes.html', {'project': project})
 
 
-def index(request, category_id=None):
-    projects = Project.objects.filter(category_id=category_id) if category_id else Project.objects.all()
+def index(request):
+    projects_filters = ProjectFilter(request.GET, queryset=Project.objects.all())
     context = {
-        'projects': projects,
-        'years': ProjectYear.objects.all(),
-        'course_numbers': ProjectCourseNumber.objects.all(),
-        'categories': ProjectCategory.objects.all()
+        'form': projects_filters.form,
+        'projects': projects_filters.qs,
     }
     return render(request, 'main/main.html', context)
 
@@ -73,14 +72,12 @@ class ProjectDetailView(DetailView): # Так правильнее
         return context
 
 
-
-
 @login_required
 def comment_sent(request, pk):
     project = get_object_or_404(Project, id=pk)
     if request.method == 'POST':
         form = CommentCreateForm(request.POST)
-        if form.is_valid(): # ??
+        if form.is_valid():
             comment = form.save(commit=False)
             comment.author = request.user
             comment.parent_project = project
@@ -123,7 +120,7 @@ def reply_delete_view(request, pk):
 # СОЗДАНИЕ ПРОЕКТА
 class ProjectCreateView(CreateView):
     model = Project
-    fields = ['image', 'name', 'description', 'category', 'year', 'course_number']
+    fields = ['image', 'name', 'description', 'category', 'course_number', 'year']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -132,7 +129,7 @@ class ProjectCreateView(CreateView):
 # РЕДАКТИРОВАНЕ ПРОФИЛЯ
 class ProjectUpdateView(UserPassesTestMixin, UpdateView):
     model = Project
-    fields = ['image', 'name', 'description', 'category', 'year', 'course_number']
+    fields = ['image', 'name', 'description', 'category', 'course_number', 'year']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -144,7 +141,7 @@ class ProjectUpdateView(UserPassesTestMixin, UpdateView):
             return True
         return False
 
-# ОТОБРАЖЕНИЕ ПРОЕКТА НА ОБЩЕЙ СТРАНИЦЕ
+# ОТОБРАЖЕНИЕ ПРОЕКТА НА ОБЩЕЙ СТРАНИЦЕ ( ОТКЛЮЧЕН! )
 class ProjectListView(ListView):
     model = Project
     template_name = 'main/main.html'

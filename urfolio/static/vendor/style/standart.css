@@ -138,3 +138,20 @@ input[type="text"]{
     padding: 16px 0 16px 0;
     background-color: #000000;
 }
+
+/* НС */
+.interaction-profile__text{
+    font-size: 22px;
+    font-weight: 800;
+    margin-right: 10px;
+    color: #464040;
+}
+
+.interaction-profile__text:hover{
+    color: #858585;
+}
+
+.interaction-profile__text:last-of-type{
+    margin-right: 15px;
+}
+/* НК */
