@@ -82,7 +82,64 @@
                     <h2>Фильтры</h2>
                     <hr>
                     <form method="GET" action="{% url 'projects:index1' %}">
-                        {{ form }}
+                        <ul>
+                        <li class="setting__item">
+                            <button type="button" class="button_style-none" id="filter-type">
+                                <svg class="close-filter__type" id="svg_project" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <line x1="8" x2="8" y2="16" stroke="#95A1BB" stroke-width="2"/>
+                                    <line y1="8" x2="16" y2="8" stroke="#95A1BB" stroke-width="2"/>
+                                </svg>
+                                <span class="standart-text_light-grey">тип проекта</span>
+                            </button>
+                            <div class="filter-type__item" id="type_item">
+                                <div class="filter-type__wrapper">
+                                    <label for="filter_site" class="standart-text_light-grey">{{ form.category }}</label>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="setting__item">
+                            <button type="button" class="button_style-none" id="filter-type">
+                                <svg class="close-filter__year" id="svg_year" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <line x1="8" x2="8" y2="16" stroke="#95A1BB" stroke-width="2"/>
+                                    <line y1="8" x2="16" y2="8" stroke="#95A1BB" stroke-width="2"/>
+                                </svg>
+                                <span class="standart-text_light-grey">учебный год</span>
+                            </button>
+                            <div class="filter-type__item" id="type_item">
+                                <div class="filter-type__wrapper">
+                                    <label for="filterYear_22" class="standart-text_light-grey">{{ form.year }}</label>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="setting__item">
+                            <button type="button" class="button_style-none" id="filter-type">
+                                <svg class="close-filter__course" id="svg_course" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <line x1="8" x2="8" y2="16" stroke="#95A1BB" stroke-width="2"/>
+                                    <line y1="8" x2="16" y2="8" stroke="#95A1BB" stroke-width="2"/>
+                                </svg>
+                                <span class="standart-text_light-grey">номер курса</span>
+                            </button>
+                            <div class="filter-type__item" id="type_item">
+                                <div class="filter-type__wrapper">
+                                    <label for="filter_course1" class="standart-text_light-grey">{{ form.course_number }}</label>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="setting__item">
+                            <button type="button" class="button_style-none" id="filter-type">
+                                <svg class="close-filter__author" id="svg_author" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <line x1="8" x2="8" y2="16" stroke="#95A1BB" stroke-width="2"/>
+                                    <line y1="8" x2="16" y2="8" stroke="#95A1BB" stroke-width="2"/>
+                                </svg>
+                                <span class="standart-text_light-grey">автор</span>
+                            </button>
+                            <div class="filter-type__item" id="type_item">
+                                <div class="filter-type__wrapper">
+                                    {{ form.author }}
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
                         <button type="submit" id="sendFilter" class="send-filter standart-text_grey"><h3>Применить</h3></button>
                     </form>
                 </div>
