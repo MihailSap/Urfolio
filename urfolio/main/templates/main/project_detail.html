@@ -112,7 +112,8 @@
                 {% for comment in project.comments.all %}
                 <div class="user-comments" id="user-comments">
                     <div class="user-img">
-                        <img src="" id="user-img" alt="">
+                        <!--<img src="" id="user-img" alt="">-->
+                        <img src="{{ comment.author.profile.image.url }}">
                     </div>
                     <div class="comment-text__wrapper">
                         <div class="user-text">
@@ -130,14 +131,14 @@
                 </div>
 
                 <hr>
-                    {% for reply in comment.replies.all %}
+                {% for reply in comment.replies.all %}
                 <div class="answer-comments" id="answer_comments">
                     <div class="user-img">
                         <img src="" id="user-img" alt="">
                     </div>
                     <div class="comment-text__wrapper">
-
                         <div class="user-text">
+                            <img src="{{ reply.author.profile.image.url }}">
                             <h4 id="user-name">{{ reply.author.username }}</h4>
                             <p class="user-comment">{{ reply.body }}</p>
                         </div>
