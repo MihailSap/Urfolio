@@ -26,4 +26,5 @@ class Register(View):
         }
         return render(request, self.template_name, context)
 
-
+def profile(request):
+    return render(request, 'users/profile.html')

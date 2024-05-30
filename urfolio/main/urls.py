@@ -12,7 +12,6 @@ from .views import (
 app_name = 'projects'
 
 urlpatterns = [
-    #path('', ProjectListView.as_view(), name='index'),
     path('', include('django.contrib.auth.urls')),
     path('<int:pk>/', ProjectDetailView.as_view(), name='project_detail'),
     path('<pk>/like/', like_project, name='like-project'),

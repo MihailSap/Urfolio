@@ -17,7 +17,7 @@ from django.views.generic import (
 )
 
 # ФУНКЦИЯ ДОБАВЛЕНИЯ ЛАЙКОВ
-def LikeView(request, pk): # OLD
+def LikeView(request, pk): # OLD УДАЛИТЬ!
     project = get_object_or_404(Project, id=request.POST.get('project_id'))
 
     is_liked = False

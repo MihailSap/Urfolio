@@ -19,12 +19,15 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 from django.views.generic import TemplateView
+from users.views import profile
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('main.urls'), name='main'),
     path('users/', include('users.urls')),
-    path('', TemplateView.as_view(template_name='main.html'), name='main')
+    path('', TemplateView.as_view(template_name='main.html'), name='main'),
+
+    path('profile/', profile, name='profile'),
 ]
 
 if settings.DEBUG:
