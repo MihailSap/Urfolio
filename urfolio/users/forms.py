@@ -20,9 +20,11 @@ class UserCreationForm(UserCreationForm):
     password2 = forms.CharField(widget=forms.PasswordInput(attrs={
         'placeholder': 'Повторите пароль'
     }))
+
     class Meta(UserCreationForm.Meta):
         model = User
         fields = ('username', 'email')
+
 
 class UserUpdateForm(forms.ModelForm):
     email = forms.EmailField()
@@ -31,7 +33,31 @@ class UserUpdateForm(forms.ModelForm):
         model = User
         fields = ('username', 'email')
 
+
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['image']
+
+class UpdateUserForm():
+    password = None
+
+    class Meta:
+        model = User
+        fields = ['username', 'email']
+        exclude = ['password1', 'password2']
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

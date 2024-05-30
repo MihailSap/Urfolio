@@ -45,3 +45,27 @@ def profile(request):
         'p_form': p_form,
     }
     return render(request, 'users/profile.html', context)
+
+def profile_management(request):
+    if request.method == 'POST':
+        user_form = UserUpdateForm(request.POST, instance=request.user)
+        if user_form.is_valid():
+            user_form.save()
+            return redirect('main')
+    user_form = UserUpdateForm(instance=request.user)
+    context = {'user_form': user_form}
+    return render(request, 'users/profile_management.html', context)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
