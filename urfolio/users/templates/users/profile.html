@@ -1,12 +1,81 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Профайл</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'vendor/style/standart.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/style/profile.css' %}">
 </head>
 <body>
-    <h1>{{ user.username }}</h1>
-    <h1>{{ user.email }}</h1>
+    <header>
+        <a href="/"><img src="{% static 'vendor/assets/img/logo.png' %}" alt="Логотип"></a>
+    </header>
+    <hr>
+    <main>
+        <div class="profile-info">
+            <div class="profile-avatar">
+                <img src="{% static 'vendor/assets/img/gallery-img.svg' %}" alt="">
+            </div>
+            <div class="user-info">
+                <div class="user-info__top">
+                    <h2>{{ user.username }}</h2>
+                    <h3>{{ user.email }}</h3>
+                    <a href="{% url 'profile-management' %}" class="standart-text_light-grey">Редактировать профиль</a>
+                </div>
+                <div class="user-description">
+                    <p><b>Описание профиля</b></p> <br>
+                    <p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat at dicta tenetur iure laudantium, dignissimos asperiores cupiditate beatae aspernatur ipsam accusantium repudiandae non nostrum libero cumque necessitatibus fuga laboriosam quam ut quae. Accusamus tempora beatae modi a. Temporibus ducimus quas dolorem quam dolores inventore assumenda? Eius enim tempora nobis et culpa necessitatibus atque. Dolorum rerum quam, inventore, magni ut molestias temporibus quia atque molestiae nihil obcaecati possimus! Harum iste sunt, recusandae, excepturi, mollitia tempora delectus ut numquam deserunt soluta dolorem ipsum? Iure modi fugiat voluptatibus vero cumque eos deleniti numquam ipsa nesciunt suscipit veritatis eligendi placeat, consequuntur porro, similique sed!</p>
+                </div>
+            </div>
+        </div>
+        <div class="user-project__wrapper">
+            <div class="user-project">
+                <button class="profile-list" id="list-project">
+                    <svg id="svg_userProject" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="8" x2="8" y2="16" stroke="#95A1BB" stroke-width="2"/>
+                        <line y1="8" x2="16" y2="8" stroke="#95A1BB" stroke-width="2"/>
+                    </svg>
+                    <h1>Ваши проекты</h1>
+                </button>
+                <ul class="list-project" id="list">
+                    <li>
+                        <h2>My Project 1</h2>
+                        <div class="interaction-project">
+                            <a href="#" class="standart-text_light-grey project-profile_text">Редактировать</a>
+                            <a href="#" class="standart-text_light-grey project-profile_text">Удалить</a>
+                        </div>
+                    </li>
+                    <a href="#">
+                        <div class="sumbit-btn">Добавить проект</div>
+                    </a>
+                </ul>
+            </div>
+            <div class="user-project">
+                <button class="profile-list" id="list-project">
+                    <svg id="svg_status_liked" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="8" x2="8" y2="16" stroke="#95A1BB" stroke-width="2"/>
+                        <line y1="8" x2="16" y2="8" stroke="#95A1BB" stroke-width="2"/>
+                    </svg>
+                    <h1>Вам понравилось</h1>
+                </button>
+                <ul class="list-project" id="list">
+                    <li>
+                        <h2>Project 1</h2>
+                        <div class="interaction-project">
+                            <p id="type-project" class="project-profile_text">Тип проекта</p>
+                            <p id="year-project" class="project-profile_text">2023-2024</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </main>
+    <footer>
 
+    </footer>
+    <script src="{% static 'vendor/js/profile.js' %}" defer></script>
 </body>
 </html>

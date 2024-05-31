@@ -2,6 +2,7 @@ from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 from django.views import View
 from .forms import UserCreationForm, ProfileUpdateForm, UserUpdateForm
+from .models import Profile
 
 
 class Register(View):
@@ -27,38 +28,18 @@ class Register(View):
         }
         return render(request, self.template_name, context)
 
-def profile(request):
-    if request.method == 'POST':
-        u_form = UserUpdateForm(request.POST, instance=request.user)
-        p_form = ProfileUpdateForm(request.POST,
-                                   request.FILES,
-                                   instance=request.user.profile)
-        if u_form.is_valid() and p_form.is_valid():
-            u_form.save()
-            p_form.save()
-            return redirect('profile')
-    else:
-        u_form = UserUpdateForm(instance=request.user)
-        p_form = ProfileUpdateForm(instance=request.user.profile)
-    context = {
-        'u_form': u_form,
-        'p_form': p_form,
-    }
-    return render(request, 'users/profile.html', context)
-
 def profile_management(request):
     if request.method == 'POST':
         user_form = UserUpdateForm(request.POST, instance=request.user)
         if user_form.is_valid():
             user_form.save()
-            return redirect('main')
+            return redirect('profile')
     user_form = UserUpdateForm(instance=request.user)
     context = {'user_form': user_form}
     return render(request, 'users/profile_management.html', context)
 
-
-
-
+def profile(request):
+    return render(request, 'users/profile.html')
 
 
 
