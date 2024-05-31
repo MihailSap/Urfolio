@@ -23,6 +23,7 @@
                 <div class="user-info__top">
                     <h2>{{ user.username }}</h2>
                     <h3>{{ user.email }}</h3>
+                    <a href="{% url 'projects:project_create' %}" class="standart-text_light-grey">Добавить проект</a>
                     <a href="{% url 'profile-management' %}" class="standart-text_light-grey">Редактировать профиль</a>
                 </div>
                 <div class="user-description">
@@ -32,6 +33,62 @@
             </div>
         </div>
         <div class="user-project__wrapper">
+            {% for project in projects %}
+                {% if user in project.slikess.all %}
+                    <div class="feed__item">
+                        <a href="#" id="user-project__link"><img src="{% static 'vendor/assets/img/project-photo.png' %}" alt="Привью проекта" id="project-photo"></a>
+                    <div class="project__card">
+                        <div class="project__title">
+                            <a href="#" id="user-project__link">
+                                <h2 id="name-progect">{{ project.name }}</h2>
+                            </a>
+
+                            <span id="project-date">20 Map 2024</span>
+                            <p class="progect__description"><b>Описание проекта</b><br> <span id="progect__description">{{ project.description }}</span></p>
+                        </div>
+                        <div class="project__information">
+                            <a href="{% url 'projects:project_detail' pk=project.id %}">Подробнее</a>
+                            <div class="project__rating">
+                                <div class="like__wrapper">
+                                    {% include 'snippets/likes.html' %}
+                                </div>
+                                <div class="info__rating-project">
+                                    <button type="button" id="share"><img src="{% static 'vendor/assets/img/Share.png' %}" alt="Иконка поделиться"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+
+                {% if project.author == user %}
+            <div class="feed__item">
+                        <a href="#" id="user-project__link"><img src="{% static 'vendor/assets/img/project-photo.png' %}" alt="Привью проекта" id="project-photo"></a>
+                    <div class="project__card">
+                        <div class="project__title">
+                            <a href="#" id="user-project__link">
+                                <h2 id="name-progect">{{ project.name }}</h2>
+                            </a>
+
+                            <span id="project-date">20 Map 2024</span>
+                            <p class="progect__description"><b>Описание проекта</b><br> <span id="progect__description">{{ project.description }}</span></p>
+                        </div>
+                        <div class="project__information">
+                            <a href="{% url 'projects:project_detail' pk=project.id %}">Подробнее</a>
+                            <div class="project__rating">
+                                <div class="like__wrapper">
+                                    {% include 'snippets/likes.html' %}
+                                </div>
+                                <div class="info__rating-project">
+                                    <button type="button" id="share"><img src="{% static 'vendor/assets/img/Share.png' %}" alt="Иконка поделиться"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
             <div class="user-project">
                 <button class="profile-list" id="list-project">
                     <svg id="svg_userProject" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">

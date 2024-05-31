@@ -2,8 +2,7 @@ from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 from django.views import View
 from .forms import UserCreationForm, ProfileUpdateForm, UserUpdateForm
-from .models import Profile
-
+from main.models import Project
 
 class Register(View):
     template_name = 'registration/register.html'
@@ -39,14 +38,6 @@ def profile_management(request):
     return render(request, 'users/profile_management.html', context)
 
 def profile(request):
-    return render(request, 'users/profile.html')
-
-
-
-
-
-
-
-
-
-
+    projects = Project.objects.all()
+    context = {'projects': projects}
+    return render(request, 'users/profile.html', context)
