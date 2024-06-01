@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import Register, profile_management, profile
+from .views import Register, profile, profile_management
 
 urlpatterns = [
     path('', include('django.contrib.auth.urls')),

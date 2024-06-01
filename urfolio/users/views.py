@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from .forms import UserCreationForm, ProfileUpdateForm, UserUpdateForm
 from main.models import Project
+from .models import Profile
 
 class Register(View):
     template_name = 'registration/register.html'
@@ -21,7 +22,7 @@ class Register(View):
             password = form.cleaned_data.get('password1') # МОЖНО ЕМЭЙЛ!! email = form.cleaned_data.get('email')
             user = authenticate(username=username, password=password)
             login(request, user)
-            return redirect('main')
+            return redirect('profile')
         context = {
             'form': form,
         }
@@ -29,15 +30,34 @@ class Register(View):
 
 def profile_management(request):
     if request.method == 'POST':
-        user_form = UserUpdateForm(request.POST, instance=request.user)
-        if user_form.is_valid():
-            user_form.save()
+        u_form = UserUpdateForm(request.POST, instance=request.user)
+        profile = Profile.objects.get(user=request.user)
+        p_form = ProfileUpdateForm(request.POST, request.FILES, instance=profile)
+
+        if u_form.is_valid() and p_form.is_valid():
+            u_form.save()
+            p_form.save()
             return redirect('profile')
-    user_form = UserUpdateForm(instance=request.user)
-    context = {'user_form': user_form}
+    else:
+        u_form = UserUpdateForm(instance=request.user)
+        profile = Profile.objects.get(user=request.user)
+        p_form = ProfileUpdateForm(instance=profile)
+
+    context = {
+        'u_form': u_form,
+        'p_form': p_form
+    }
     return render(request, 'users/profile_management.html', context)
 
 def profile(request):
     projects = Project.objects.all()
-    context = {'projects': projects}
+    try:
+        profile = request.user.profile
+    except Profile.DoesNotExist:
+        profile = Profile.objects.create(user=request.user)
+
+    context = {
+        'profile': profile,
+        'projects': projects
+    }
     return render(request, 'users/profile.html', context)
