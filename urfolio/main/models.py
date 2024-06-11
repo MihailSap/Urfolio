@@ -22,8 +22,6 @@ class Project(models.Model):
         SECOND = 'SECOND';
         THIRD = 'THIRD';
         FOURTH = 'FOURTH';
-
-
     image = models.ImageField(upload_to='projects_images', null=True, blank=True)
     name = models.CharField(max_length=128, unique=True)
     description = models.TextField(null=True, blank=True)
@@ -38,8 +36,8 @@ class Project(models.Model):
     course_number = models.CharField(max_length=128, choices=CourseNumber.choices)
     year = models.CharField(max_length=128, choices=Year.choices)
 
-    def total_likes(self):
-        return self.likes.count()
+    # def total_likes(self):
+    #     return self.likes.count()
     def __str__(self):
         return self.name
 

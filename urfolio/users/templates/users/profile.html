@@ -17,7 +17,7 @@
     <main>
         <div class="profile-info">
             <div class="profile-avatar">
-                <img src="{% static 'vendor/assets/img/gallery-img.svg' %}" alt="">
+                <img src="{{ user.profile.image.url }}" alt="">
             </div>
             <div class="user-info">
                 <div class="user-info__top">

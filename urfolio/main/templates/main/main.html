@@ -55,6 +55,30 @@
                                 <span class="standart-text_grey">по времени</span>
                             </button>
                         </li>
+
+                        <a href="?sort=name&order={{ next_order }}" class="btn btn-primary">
+                            Sort by Name
+                            {% if current_sort == 'name' and next_order == 'asc' %}
+                                (Descending)
+                            {% elif current_sort == 'name' and next_order == 'desc' %}
+                                (Ascending)
+                            {% else %}
+                                (Sort it)
+                            {% endif %}
+                        </a>
+
+
+                    <a href="?sort=slikess&order={{ next_order }}" class="btn btn-primary">
+                            Sort by Likes
+                            {% if current_sort == 'slikess' and next_order == 'asc' %}
+                                (Descending)
+                            {% elif current_sort == 'slikess' and next_order == 'desc' %}
+                                (Ascending)
+                            {% else %}
+                                (Sort it)
+                            {% endif %}
+                        </a>
+
                         <li class="setting__item">
                             <button type="button" id="sorting-type">
                                 <svg id="sort-type_rating" width="19" height="12" viewBox="0 0 19 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -65,6 +89,7 @@
                                 <span class="standart-text_grey">по рейтингу</span>
                             </button>
                         </li>
+
                         <li class="setting__item">
                             <button type="button" class="button_style-none" id="sorting-type">
                                 <svg id="sort-type_title" width="19" height="12" viewBox="0 0 19 12" fill="none" xmlns="http://www.w3.org/2000/svg">

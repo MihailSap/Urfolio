@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.db.models import Count
 from django.urls import reverse, reverse_lazy
 from .filters import ProjectFilter
 from .forms import CommentCreateForm, ReplyCreateForm
@@ -25,13 +26,75 @@ def like_project(request, pk):
             project.slikess.add(request.user)
     return render(request, 'snippets/likes.html', {'project': project})
 
+from django.shortcuts import render
+from .models import Project
+from .filters import ProjectFilter
+
 def index(request):
-    projects_filters = ProjectFilter(request.GET, queryset=Project.objects.all())
+    projects_qs = Project.objects.all()
+    projects_filters = ProjectFilter(request.GET, queryset=projects_qs)
+
+    # Check if the sorting parameters are present in the GET request
+    sort_by = request.GET.get('sort', None)
+    sort_order = request.GET.get('order', 'asc')  # Default to ascending order
+
+    if sort_by == 'name':
+        if sort_order == 'asc':
+            projects_qs = projects_filters.qs.order_by('name')
+            next_order = 'desc'
+        else:
+            projects_qs = projects_filters.qs.order_by('-name')
+            next_order = 'asc'
+    elif sort_by == 'slikess':
+        if sort_order == 'asc':
+            projects_qs = projects_filters.qs.order_by('slikess').annotate(count=Count('slikess')).order_by('-count')
+            next_order = 'desc'
+        else:
+            projects_qs = projects_filters.qs.order_by('slikess').annotate(count=Count('slikess')).order_by('count')
+            next_order = 'asc'
+    else:
+        projects_qs = projects_filters.qs
+        next_order = 'asc'
+
+    context = {
+        'form': projects_filters.form,
+        'projects': projects_qs,
+        'next_order': next_order,
+        'current_sort': sort_by,
+    }
+    return render(request, 'main/main.html', context)
+
+# def index(request):
+#     projects_qs = Project.objects.all()
+#
+#     # ПО НАЗВАНИЮ
+#     # projects_qs = Project.objects.order_by('-name')
+#     # ПО КОЛ-ВУ ЛАЙКОВ
+#     #projects_qs = Project.objects.order_by('slikess').annotate(count=Count('slikess')).order_by('-count')
+#
+#     projects_filters = ProjectFilter(request.GET, queryset=projects_qs)
+#     context = {
+#         'form': projects_filters.form,
+#         'projects': projects_filters.qs,
+#     }
+#     return render(request, 'main/main.html', context)
+
+def sortByTitle(request):
+    projects_qs = Project.objects.order_by('-name')
+    projects_filters = ProjectFilter(request.GET, queryset=projects_qs)
     context = {
         'form': projects_filters.form,
         'projects': projects_filters.qs,
     }
     return render(request, 'main/main.html', context)
+
+# def index(request):
+#     sort_type = request.GET.get('sort_type', 'default')
+#     if sort_type == 'slikess_desc':
+#         projects = Project.objects.annotate(slikes_count=Count('slikess')).order_by('-slikes_count')
+#     else:
+#         projects = Project.objects.all()
+#     return render(request, 'main/main.html', {'projects': projects})
 
 @login_required
 def comment_sent(request, pk):
@@ -83,6 +146,10 @@ class ProjectDetailView(DetailView): # Так правильнее
 
     def get_context_data(self, *args, **kwargs):
         context = super(ProjectDetailView, self).get_context_data(*args, **kwargs)
+        commentform = CommentCreateForm()
+        replyform = ReplyCreateForm()
+        context['commentform'] = commentform
+        context['replyform'] = replyform
         return context
 
 # СОЗДАНИЕ ПРОЕКТА

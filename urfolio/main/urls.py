@@ -6,7 +6,7 @@ from .views import (
     ProjectUpdateView, ProjectDetailView,
     ProjectDeleteView, comment_sent,
     comment_delete_view, reply_sent,
-    reply_delete_view, like_project,
+    reply_delete_view, like_project, sortByTitle
 )
 
 app_name = 'projects'
@@ -23,6 +23,10 @@ urlpatterns = [
     path('reply-sent/<pk>', reply_sent, name='reply-sent'),
     path('reply/delete/<pk>', reply_delete_view, name='reply-delete'),
     path('', views.index, name='index1'), ##### !!!!
+
+    path('sort-by-title/', views.sortByTitle, name='sort-by-title'),
+
+
 ]
 
 
