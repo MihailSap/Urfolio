@@ -26,8 +26,26 @@ class UserCreationForm(UserCreationForm):
         fields = ('username', 'email')
 
 
+# class UserUpdateForm(forms.ModelForm):
+#     email = forms.EmailField()
+#
+#     class Meta:
+#         model = User
+#         fields = ('username', 'email')
+#
+#
+# class ProfileUpdateForm(forms.ModelForm):
+#
+#     class Meta:
+#         model = Profile
+#         fields = ['image', 'description',
+#                   'vk_link', 'github_link', 'figma_link', 'tg_link', 'cloud_link']
+
 class UserUpdateForm(forms.ModelForm):
-    email = forms.EmailField()
+    username = forms.CharField(widget=forms.TextInput(attrs={
+        'placeholder': 'Введите имя'
+    }))
+    email = forms.EmailField(required=False)
 
     class Meta:
         model = User
@@ -35,11 +53,20 @@ class UserUpdateForm(forms.ModelForm):
 
 
 class ProfileUpdateForm(forms.ModelForm):
+    image = forms.ImageField(widget=forms.FileInput(attrs={}), required=False)
+    description = forms.CharField(widget=forms.Textarea(attrs={}), required=False)
+
+    vk_link = forms.URLField(required=False)
+    github_link = forms.URLField(widget=forms.URLInput(attrs={}), required=False)
+    figma_link = forms.URLField(widget=forms.URLInput(attrs={}), required=False)
+    tg_link = forms.URLField(widget=forms.URLInput(attrs={}), required=False)
+    cloud_link = forms.URLField(widget=forms.URLInput(attrs={}), required=False)
     class Meta:
         model = Profile
-        fields = ['image', 'description']
+        fields = ['image', 'description',
+                  'vk_link', 'github_link', 'figma_link', 'tg_link', 'cloud_link']
 
-class UpdateUserForm():
+class UpdateUserForm(): # НЕ ИСПОЛЬЗУЕТСЯ
     password = None
 
     class Meta:

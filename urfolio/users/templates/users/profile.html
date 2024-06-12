@@ -22,117 +22,105 @@
             <div class="user-info">
                 <div class="user-info__top">
                     <h2>{{ user.username }}</h2>
-                    <h3>{{ user.email }}</h3>
-                    <a href="{% url 'projects:project_create' %}" class="standart-text_light-grey">Добавить проект</a>
                     <a href="{% url 'profile-management' %}" class="standart-text_light-grey">Редактировать профиль</a>
                 </div>
                 <div class="user-description">
                     <p><b>Описание профиля</b></p> <br>
-                    <p class="description">{{ user.profile.description }}</p>
+                    <p class="description" id="description">{{ user.profile.description }}</p>
+                </div>
+                <div class="user-links">
+                    <a href="{{ user.profile.github_link }}"><img src="{% static 'vendor/assets/img/github.png' %}" width="40px" alt=""></a>
+                    <a href="{{ user.profile.figma_link }}"><img src="{% static 'vendor/assets/img/figma.png' %}" width="40px" alt=""></a>
+                    <a href="{{ user.profile.vk_link }}"><img src="{% static 'vendor/assets/img/vk.png' %}" width="40px" alt=""></a>
+                    <a href="{{ user.profile.tg_link }}"><img src="{% static 'vendor/assets/img/tg.png' %}" width="40px" alt=""></a>
+                    <a href="{{ user.profile.could_link }}"><img src="{% static 'vendor/assets/img/could.png' %}" width="40px" alt=""></a>
                 </div>
             </div>
         </div>
+    {% for project in projects %}
+    {{ project.name }}
+    {% endfor %}
         <div class="user-project__wrapper">
-            {% for project in projects %}
-                {% if user in project.slikess.all %}
-                    <div class="feed__item">
-                        <a href="#" id="user-project__link"><img src="{% static 'vendor/assets/img/project-photo.png' %}" alt="Привью проекта" id="project-photo"></a>
-                    <div class="project__card">
-                        <div class="project__title">
-                            <a href="#" id="user-project__link">
-                                <h2 id="name-progect">{{ project.name }}</h2>
-                            </a>
-
-                            <span id="project-date">20 Map 2024</span>
-                            <p class="progect__description"><b>Описание проекта</b><br> <span id="progect__description">{{ project.description }}</span></p>
-                        </div>
-                        <div class="project__information">
-                            <a href="{% url 'projects:project_detail' pk=project.id %}">Подробнее</a>
-                            <div class="project__rating">
-                                <div class="like__wrapper">
-                                    {% include 'snippets/likes.html' %}
-                                </div>
-                                <div class="info__rating-project">
-                                    <button type="button" id="share"><img src="{% static 'vendor/assets/img/Share.png' %}" alt="Иконка поделиться"></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {% endif %}
-
-
-                {% if project.author == user %}
-            <div class="feed__item">
-                        <a href="#" id="user-project__link"><img src="{% static 'vendor/assets/img/project-photo.png' %}" alt="Привью проекта" id="project-photo"></a>
-                    <div class="project__card">
-                        <div class="project__title">
-                            <a href="#" id="user-project__link">
-                                <h2 id="name-progect">{{ project.name }}</h2>
-                            </a>
-
-                            <span id="project-date">20 Map 2024</span>
-                            <p class="progect__description"><b>Описание проекта</b><br> <span id="progect__description">{{ project.description }}</span></p>
-                        </div>
-                        <div class="project__information">
-                            <a href="{% url 'projects:project_detail' pk=project.id %}">Подробнее</a>
-                            <div class="project__rating">
-                                <div class="like__wrapper">
-                                    {% include 'snippets/likes.html' %}
-                                </div>
-                                <div class="info__rating-project">
-                                    <button type="button" id="share"><img src="{% static 'vendor/assets/img/Share.png' %}" alt="Иконка поделиться"></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {% endif %}
-            {% endfor %}
             <div class="user-project">
-                <button class="profile-list" id="list-project">
-                    <svg id="svg_userProject" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <button class="profile-list" id="button_user_project">
+                    <svg id="svg_list_status" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <line x1="8" x2="8" y2="16" stroke="#95A1BB" stroke-width="2"/>
                         <line y1="8" x2="16" y2="8" stroke="#95A1BB" stroke-width="2"/>
                     </svg>
                     <h1>Ваши проекты</h1>
                 </button>
-                <ul class="list-project" id="list">
-                    <li>
-                        <h2>My Project 1</h2>
-                        <div class="interaction-project">
-                            <a href="#" class="standart-text_light-grey project-profile_text">Редактировать</a>
-                            <a href="#" class="standart-text_light-grey project-profile_text">Удалить</a>
-                        </div>
-                    </li>
-                    <a href="#">
+                <div class="list-project__wrapper" id="list_project">
+                    <div class="list__wrapper">
+                        <button id="user_left_btn">
+                            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M17.9091 15.2652C17.5032 14.8906 16.8706 14.9159 16.496 15.3217L13.2652 18.8217C12.9116 19.2047 12.9116 19.7952 13.2652 20.1782L16.496 23.6783C16.8706 24.0841 17.5032 24.1094 17.909 23.7348C18.3149 23.3602 18.3402 22.7276 17.9656 22.3217L16.284 20.5L26 20.5C26.5523 20.5 27 20.0523 27 19.5C27 18.9477 26.5523 18.5 26 18.5L16.284 18.5L17.9656 16.6783C18.3402 16.2725 18.3149 15.6398 17.9091 15.2652Z" fill="#777E90"/>
+                            </svg>
+                        </button>
+                            {% for project in projects %}
+                                {% if project.author == user %}
+                                    <a href="{% url 'projects:project_detail' pk=project.id %}">Подробнее</a>
+                                <h2>{{ project.name }}</h2>
+                                <div class="project__wrapper">
+                                    <div class="project__img">
+                                        <img src="{{ project.image.url }}" alt="">
+                                    </div>
+                                    <div class="interact-project">
+                                    </div>
+                                    <a href="{% url 'projects:project_update' project.id %}"><span class="interaction-profile__text">Редактировать проект</span></a>
+                                    <a href="{% url 'projects:project_delete' project.id %}"><span class="interaction-profile__text">Удалить</span></a>
+
+                                </div>
+                                {% endif %}
+
+                            {% endfor %}
+                        <button id="user_right_btn">
+                            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M22.0909 15.2652C22.4968 14.8906 23.1294 14.9159 23.504 15.3217L26.7348 18.8217C27.0884 19.2047 27.0884 19.7952 26.7348 20.1782L23.504 23.6783C23.1294 24.0841 22.4968 24.1094 22.091 23.7348C21.6851 23.3602 21.6598 22.7276 22.0344 22.3217L23.716 20.5L14 20.5C13.4477 20.5 13 20.0523 13 19.5C13 18.9477 13.4477 18.5 14 18.5L23.716 18.5L22.0344 16.6783C21.6598 16.2725 21.6851 15.6398 22.0909 15.2652Z" fill="#777E90"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <a href="{% url 'projects:project_create' %}">
                         <div class="sumbit-btn">Добавить проект</div>
                     </a>
-                </ul>
+                </div>
             </div>
             <div class="user-project">
-                <button class="profile-list" id="list-project">
-                    <svg id="svg_status_liked" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <button class="profile-list" id="button_liked_project">
+                    <svg id="svg_list_status" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <line x1="8" x2="8" y2="16" stroke="#95A1BB" stroke-width="2"/>
                         <line y1="8" x2="16" y2="8" stroke="#95A1BB" stroke-width="2"/>
                     </svg>
                     <h1>Вам понравилось</h1>
                 </button>
-                <ul class="list-project" id="list">
-                    <li>
-                        <h2>Project 1</h2>
-                        <div class="interaction-project">
-                            <p id="type-project" class="project-profile_text">Тип проекта</p>
-                            <p id="year-project" class="project-profile_text">2023-2024</p>
-                        </div>
-                    </li>
-                </ul>
+                <div class="list-project__wrapper" id="list_project">
+                    <div class="list__wrapper">
+                        <button id="liked_left_btn">
+                            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M17.9091 15.2652C17.5032 14.8906 16.8706 14.9159 16.496 15.3217L13.2652 18.8217C12.9116 19.2047 12.9116 19.7952 13.2652 20.1782L16.496 23.6783C16.8706 24.0841 17.5032 24.1094 17.909 23.7348C18.3149 23.3602 18.3402 22.7276 17.9656 22.3217L16.284 20.5L26 20.5C26.5523 20.5 27 20.0523 27 19.5C27 18.9477 26.5523 18.5 26 18.5L16.284 18.5L17.9656 16.6783C18.3402 16.2725 18.3149 15.6398 17.9091 15.2652Z" fill="#777E90"/>
+                            </svg>
+                        </button>
+                            {% for project in projects %}
+                                {% if user in project.slikess.all %}
+                                <h2>{{ project.name }}</h2>
+                                <div class="project__wrapper">
+                                    <div class="project__img">
+                                        <img src="{{ project.image.url }}" alt="">
+                                    </div>
+                                </div>
+                                <a href="{% url 'projects:project_detail' pk=project.id %}">Подробнее</a>
+                                {% endif %}
+                            {% endfor %}
+                        <button id="liked_right_btn">
+                            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M22.0909 15.2652C22.4968 14.8906 23.1294 14.9159 23.504 15.3217L26.7348 18.8217C27.0884 19.2047 27.0884 19.7952 26.7348 20.1782L23.504 23.6783C23.1294 24.0841 22.4968 24.1094 22.091 23.7348C21.6851 23.3602 21.6598 22.7276 22.0344 22.3217L23.716 20.5L14 20.5C13.4477 20.5 13 20.0523 13 19.5C13 18.9477 13.4477 18.5 14 18.5L23.716 18.5L22.0344 16.6783C21.6598 16.2725 21.6851 15.6398 22.0909 15.2652Z" fill="#777E90"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
-    <footer>
 
-    </footer>
     <script src="{% static 'vendor/js/profile.js' %}" defer></script>
 </body>
 </html>

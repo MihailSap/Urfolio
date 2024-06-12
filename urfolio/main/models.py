@@ -35,6 +35,7 @@ class Project(models.Model):
     category = models.CharField(max_length=128, choices=Category.choices)
     course_number = models.CharField(max_length=128, choices=CourseNumber.choices)
     year = models.CharField(max_length=128, choices=Year.choices)
+
     def __str__(self):
         return self.name
 

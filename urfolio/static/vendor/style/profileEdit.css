@@ -1,0 +1,176 @@
+button{
+    border-radius: 90px;
+    padding: 16px 24px;
+    width: 424px;
+    height: 48px;
+    background-color: #000000;
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+    margin-left: 20%;
+    margin-bottom: 20px;
+}
+
+.input-file {
+	position: relative;
+	display: inline-block;
+}
+.input-file span {
+	position: relative;
+	display: inline-block;
+	cursor: pointer;
+	outline: none;
+	text-decoration: none;
+	font-size: 14px;
+	vertical-align: middle;
+	color: rgb(255 255 255);
+	text-align: center;
+	border-radius: 4px;
+	background-color: #a2a2a2;
+	line-height: 22px;
+	height: 40px;
+	padding: 10px 20px;
+	box-sizing: border-box;
+	border: none;
+	margin: 0;
+	transition: background-color 0.2s;
+}
+.input-file input[type=file] {
+	position: absolute;
+	z-index: -1;
+	opacity: 0;
+	display: block;
+	width: 0;
+	height: 0;
+}
+
+/* Focus */
+.input-file input[type=file]:focus + span {
+	box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+
+/* Hover/active */
+.input-file:hover span {
+	background-color: #d5d5d5;
+    color: #000000;
+}
+.input-file:active span {
+	background-color: #434343;
+    color: white;
+}
+
+/* Disabled */
+.input-file input[type=file]:disabled + span {
+	background-color: #eee;
+}
+
+img{
+    display: inline-block;
+}
+
+header{
+    text-align: center;
+}
+
+h1{
+    text-align: center;
+    margin-top: 50px;
+    font-size: 64px;
+}
+
+form{
+    margin-top: 100px;
+}
+
+.edit-description{
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+}
+
+.user-photo{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 40%;
+    align-items: center;
+    border-radius: 100%;
+}
+
+.user-photo > img{
+    border-radius: 100%;
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+}
+
+.name-description{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 55%;
+}
+
+.standart-input{
+    color: #000000;
+    font-size: 20px;
+    background-color: #d8dde2;
+    padding: 5px 10px;
+    width: 100%;
+}
+
+input.descript{
+    height: 250px;
+}
+
+.links > input{
+    width: 90%;
+}
+
+.links > label{
+    display: inline-block;
+    height: 50px;
+    margin-right: 10px;
+    margin-bottom: 20px;
+    position: relative;
+    top: 15px;
+}
+
+.links > label > img{
+    display: inline-block;
+}
+
+.input__wrapper{
+    display: flex;
+    gap: 15px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.edit-other{
+    display: flex;
+    gap: 100px;
+    margin-top: 100px;
+}
+
+.edit-link{
+    width: 50%;
+}
+
+.edit-link > h2{
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.edit-password{
+    width: 40%;
+}
+
+.edit-password > h2{
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.edit-password > input{
+    margin-bottom: 30px;
+}

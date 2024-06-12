@@ -1,22 +1,81 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'vendor/style/profileEdit.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/style/standart.css' %}">
 </head>
 <body>
-    <div>
-        <form method="POST" enctype="multipart/form-data">
-          {% csrf_token %}
-          <fieldset class="form-group">
-              <legend class="border-bottom mb-4">Profile Info</legend>
-              {{ u_form }}
-              {{ p_form }}
-          </fieldset>
-          <div class="form-group">
-              <button class="btn btn-outline-info" type="submit">Update</button>
-          </div>
-      </form>
-    </div>
+    <header>
+        <a href="/"><img src="{% static 'vendor/assets/img/logo.png' %}" alt="Логотип"></a>
+    </header>
+    <hr>
+    <main>
+        <h1>Редактировать профиль</h1>
+        <form form action="" name="user-info" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="edit-description">
+                <div class="user-photo">
+                    <img src="{{ request.user.profile.image.url }}" alt="">
+                    {{ p_form.image }}
+                    <!--<form method="post" enctype="multipart/form-data">
+                        <label class="input-file">
+                            <input type="file" name="file">
+                            <span>Выберите файл</span>
+                        </label>
+                    </form>-->
+                </div>
+                <div class="name-description">
+                        <label for="name"><h3>Имя пользователя</h3></label>
+                        {{ u_form.username }}
+                        <!--<input type="text" placeholder="Введите имя пользователя" id="name" class="standart-input" name="user-name">-->
+                        <label for="descript"><h3>Описание профиля</h3></label>
+                        {{ p_form.description }}
+                        <!--<input type="text" placeholder="Введите описание профиля" id="descript" class="standart-input descript" name="user-descript">-->
+                </div>
+            </div>
+            <div class="edit-other">
+                <div class="edit-link">
+                    <h2>Ссылки в профиле</h2>
+                    <div class="links">
+                        <label for="name"><img src="{% static 'vendor/assets/img/vk.png' %}" alt=""></label>
+                        {{ p_form.vk_link }}
+                        <!--<input type="text" placeholder="Добавьте ссылку на Ваш аккаунт в VK" id="name" class="standart-input" name="user-vk"> <br>-->
+                        <label for="name"><img src="{% static 'vendor/assets/img/tg.png' %}" alt=""></label>
+                        {{ p_form.tg_link }}
+                        <!--<input type="text" placeholder="Добавьте ссылку на Ваш аккаунт в Telegram" id="name" class="standart-input" name="user-name"> <br>-->
+                        <label for="name"><img src="{% static 'vendor/assets/img/github.png' %}" alt=""></label>
+                        {{ p_form.github_link }}
+                        <!--<input type="text" placeholder="Добавьте ссылку на Ваш аккаунт в GitHub" id="name" class="standart-input" name="user-name"> <br>-->
+                        <label for="name"><img src="{% static 'vendor/assets/img/figma.png' %}" alt=""></label>
+                        {{ p_form.figma_link }}
+                        <!--<input type="text" placeholder="Добавьте ссылку на Ваш аккаунт в Figma" id="name" class="standart-input" name="user-name"> <br>-->
+                        <div class="input__wrapper">
+                            <label for="name"><img src="{% static 'vendor/assets/img/could.png' %}" alt=""></label>
+                            {{ p_form.cloud_link }}
+                            <!--<input type="text" placeholder="Добавьте ссылку на Ваш аккаунт в облаке" id="name" class="standart-input" name="user-name">-->
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-outline-info" type="submit">Update</button>
+                <div class="edit-password">
+                    <h2>Изменить пароль</h2>
+                    <label for="name"><h3>Старый пароль</h3></label>
+                    <input type="text" placeholder="Введите Ваш старый пароль" id="name" class="standart-input" name="user-name">
+                    <label for="name"><h3>Новый пароль</h3></label>
+                    <input type="text" placeholder="Введите Ваш новый пароль" id="name" class="standart-input" name="user-name">
+                    <label for="name"><h3>Подтверждение</h3></label>
+                    <input type="text" placeholder="Повторите Ваш новый пароль" id="name" class="standart-input" name="user-name">
+                    <button type="submit">Применить изменения</button>
+                    <button>Удалить аккаунт</button>
+                </div>
+            </div>
+        </form>
+    </main>
+    <footer></footer>
 </body>
 </html>

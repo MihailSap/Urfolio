@@ -10,6 +10,12 @@ class Profile(models.Model):
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
     description = models.TextField(blank=True)
 
+    # ССЫЛКИ НА СОЦ СЕТИ
+    github_link = models.URLField(null=True, blank=True)
+    figma_link = models.URLField(null=True, blank=True)
+    vk_link = models.URLField(null=True, blank=True)
+    tg_link = models.URLField(null=True, blank=True)
+    cloud_link = models.URLField(null=True, blank=True)
     def __str__(self):
         return f'{self.user.username} Profile'
 
