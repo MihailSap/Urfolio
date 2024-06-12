@@ -43,7 +43,7 @@
     </header>
     <main>
         <div class="project__card">
-            <a href="#" id="user-project__link"><img src="{% static 'vendor/assets/img/project-photo.png' %}" class="project-img" alt="Привью проекта" id="project-photo"></a>
+            <img src="{{ project.image.url }}" class ="project-img" alt="">
             <div class="project-info__wrapper">
                 <div class="project__title">
                     <a href="#" id="user-project__link">

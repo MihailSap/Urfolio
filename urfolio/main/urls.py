@@ -5,8 +5,8 @@ from .views import (
     ProjectCreateView,
     ProjectUpdateView, ProjectDetailView,
     ProjectDeleteView, comment_sent,
-    comment_delete_view, reply_sent,
-    reply_delete_view, like_project, sortByTitle
+    comment_delete_view, reply_sent, ProjectListView,
+    reply_delete_view, like_project
 )
 
 app_name = 'projects'
@@ -22,9 +22,7 @@ urlpatterns = [
     path('comment/delete/<pk>', comment_delete_view, name='comment-delete'),
     path('reply-sent/<pk>', reply_sent, name='reply-sent'),
     path('reply/delete/<pk>', reply_delete_view, name='reply-delete'),
-    path('', views.index, name='index1'), ##### !!!!
-
-    path('sort-by-title/', views.sortByTitle, name='sort-by-title'),
+    path('', ProjectListView.as_view(), name='index1'), ##### !!!!
 
 
 ]

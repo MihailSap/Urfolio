@@ -45,39 +45,60 @@
                     <h2>Сортировка</h2>
                     <hr>
                     <ul>
-                        <li class="setting__item">
-                            <button type="button" class="button_style-none" id="sorting-type">
-                                <svg id="sort-type_time" width="19" height="12" viewBox="0 0 19 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <a href="?sort=name&order={{ next_order }}" class="btn btn-primary">
+                            по названию
+                            {% if current_sort == 'name' and next_order == 'asc' %}
+                                (Descending)
+                                <!--<svg id="sort-type_time" width="19" height="12" viewBox="0 0 19 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <line x1="17" y1="1.5" x2="2" y2="1.5" stroke="#95A1BB"/>
                                     <line x1="17" y1="5.5" x2="2" y2="5.5" stroke="#95A1BB"/>
                                     <line x1="17" y1="9.5" x2="2" y2="9.5" stroke="#95A1BB"/>
-                                </svg>
-                                <span class="standart-text_grey">по времени</span>
-                            </button>
-                        </li>
-
-                        <a href="?sort=name&order={{ next_order }}" class="btn btn-primary">
-                            Sort by Name
-                            {% if current_sort == 'name' and next_order == 'asc' %}
-                                (Descending)
+                                </svg>-->
                             {% elif current_sort == 'name' and next_order == 'desc' %}
                                 (Ascending)
+                                <!--<svg id="sort-type_time" width="19" height="12" viewBox="0 0 19 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <line x1="17" y1="1.5" x2="2" y2="1.5" stroke="#95A1BB"/>
+                                    <line x1="17" y1="5.5" x2="12" y2="5.5" stroke="#95A1BB"/>
+                                    <line x1="17" y1="9.5" x2="2" y2="9.5" stroke="#95A1BB"/>
+                                </svg>-->
                             {% else %}
+                                <!--<svg id="sort-type_time" width="19" height="12" viewBox="0 0 19 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <line x1="17" y1="1.5" x2="12" y2="1.5" stroke="#95A1BB"/>
+                                    <line x1="17" y1="5.5" x2="7" y2="5.5" stroke="#95A1BB"/>
+                                    <line x1="17" y1="9.5" x2="2" y2="9.5" stroke="#95A1BB"/>
+                                </svg>-->
                                 (Sort it)
                             {% endif %}
+                            <!--<span class="standart-text_grey">по названию</span>-->
                         </a>
 
 
                     <a href="?sort=slikess&order={{ next_order }}" class="btn btn-primary">
-                            Sort by Likes
+                            по рейтингу
                             {% if current_sort == 'slikess' and next_order == 'asc' %}
                                 (Descending)
+                                <!--<svg id="sort-type_time" width="19" height="12" viewBox="0 0 19 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <line x1="17" y1="1.5" x2="12" y2="1.5" stroke="#95A1BB"/>
+                                    <line x1="17" y1="5.5" x2="7" y2="5.5" stroke="#95A1BB"/>
+                                    <line x1="17" y1="9.5" x2="2" y2="9.5" stroke="#95A1BB"/>
+                                </svg>-->
                             {% elif current_sort == 'slikess' and next_order == 'desc' %}
                                 (Ascending)
+                                <!--<svg id="sort-type_time" width="19" height="12" viewBox="0 0 19 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <line x1="17" y1="1.5" x2="2" y2="1.5" stroke="#95A1BB"/>
+                                    <line x1="17" y1="5.5" x2="12" y2="5.5" stroke="#95A1BB"/>
+                                    <line x1="17" y1="9.5" x2="2" y2="9.5" stroke="#95A1BB"/>
+                                </svg>-->
                             {% else %}
                                 (Sort it)
+                                <!--<svg id="sort-type_time" width="19" height="12" viewBox="0 0 19 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <line x1="17" y1="1.5" x2="2" y2="1.5" stroke="#95A1BB"/>
+                                    <line x1="17" y1="5.5" x2="2" y2="5.5" stroke="#95A1BB"/>
+                                    <line x1="17" y1="9.5" x2="2" y2="9.5" stroke="#95A1BB"/>
+                                </svg>-->
                             {% endif %}
-                        </a>
+                        <!--<span class="standart-text_grey">по рейтингу</span>-->
+                    </a>
 
                         <li class="setting__item">
                             <button type="button" id="sorting-type">
@@ -171,7 +192,11 @@
             <div class="project__feed">
                 {% for project in projects %}
                 <div class="feed__item">
+                    {% if project.image %}
+                        <a href="#" id="user-project__link"><img src="{{ project.image.url }}" width="300" height="300" id="project-photo" alt=""></a>
+                    {% else %}
                         <a href="#" id="user-project__link"><img src="{% static 'vendor/assets/img/project-photo.png' %}" alt="Привью проекта" id="project-photo"></a>
+                    {% endif %}
                     <div class="project__card">
                         <div class="project__title">
                             <a href="#" id="user-project__link">

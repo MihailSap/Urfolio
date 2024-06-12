@@ -26,75 +26,7 @@ def like_project(request, pk):
             project.slikess.add(request.user)
     return render(request, 'snippets/likes.html', {'project': project})
 
-from django.shortcuts import render
-from .models import Project
-from .filters import ProjectFilter
 
-def index(request):
-    projects_qs = Project.objects.all()
-    projects_filters = ProjectFilter(request.GET, queryset=projects_qs)
-
-    # Check if the sorting parameters are present in the GET request
-    sort_by = request.GET.get('sort', None)
-    sort_order = request.GET.get('order', 'asc')  # Default to ascending order
-
-    if sort_by == 'name':
-        if sort_order == 'asc':
-            projects_qs = projects_filters.qs.order_by('name')
-            next_order = 'desc'
-        else:
-            projects_qs = projects_filters.qs.order_by('-name')
-            next_order = 'asc'
-    elif sort_by == 'slikess':
-        if sort_order == 'asc':
-            projects_qs = projects_filters.qs.order_by('slikess').annotate(count=Count('slikess')).order_by('-count')
-            next_order = 'desc'
-        else:
-            projects_qs = projects_filters.qs.order_by('slikess').annotate(count=Count('slikess')).order_by('count')
-            next_order = 'asc'
-    else:
-        projects_qs = projects_filters.qs
-        next_order = 'asc'
-
-    context = {
-        'form': projects_filters.form,
-        'projects': projects_qs,
-        'next_order': next_order,
-        'current_sort': sort_by,
-    }
-    return render(request, 'main/main.html', context)
-
-# def index(request):
-#     projects_qs = Project.objects.all()
-#
-#     # ПО НАЗВАНИЮ
-#     # projects_qs = Project.objects.order_by('-name')
-#     # ПО КОЛ-ВУ ЛАЙКОВ
-#     #projects_qs = Project.objects.order_by('slikess').annotate(count=Count('slikess')).order_by('-count')
-#
-#     projects_filters = ProjectFilter(request.GET, queryset=projects_qs)
-#     context = {
-#         'form': projects_filters.form,
-#         'projects': projects_filters.qs,
-#     }
-#     return render(request, 'main/main.html', context)
-
-def sortByTitle(request):
-    projects_qs = Project.objects.order_by('-name')
-    projects_filters = ProjectFilter(request.GET, queryset=projects_qs)
-    context = {
-        'form': projects_filters.form,
-        'projects': projects_filters.qs,
-    }
-    return render(request, 'main/main.html', context)
-
-# def index(request):
-#     sort_type = request.GET.get('sort_type', 'default')
-#     if sort_type == 'slikess_desc':
-#         projects = Project.objects.annotate(slikes_count=Count('slikess')).order_by('-slikes_count')
-#     else:
-#         projects = Project.objects.all()
-#     return render(request, 'main/main.html', {'projects': projects})
 
 @login_required
 def comment_sent(request, pk):
@@ -176,11 +108,41 @@ class ProjectUpdateView(UserPassesTestMixin, UpdateView):
             return True
         return False
 
+class ProjectListView(ListView):
+    model = Project
+    template_name = 'main/main.html'
+    context_object_name = 'projects'
+    paginate_by = 3
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        projects_filters = ProjectFilter(self.request.GET, queryset=queryset)
+        queryset = projects_filters.qs
+        sort_by = self.request.GET.get('sort', None)
+        sort_order = self.request.GET.get('order', 'asc')  # Default to ascending order
 
-# ОТОБРАЖЕНИЕ ПРОЕКТА НА ОБЩЕЙ СТРАНИЦЕ ( ОТКЛЮЧЕН! )
-# class ProjectListView(ListView):
-#     model = Project
-#     template_name = 'main/main.html'
-#     context_object_name = 'projects'
-#     paginate_by = 3 # СКОЛЬКО ПРОЕКТОВ ПОКАЗЫВАТЬ НА ОДНОЙ СТРАНИЦЕ
+        if sort_by == 'name':
+            if sort_order == 'asc':
+                queryset = queryset.order_by('name')
+            else:
+                queryset = queryset.order_by('-name')
+        elif sort_by == 'slikess':
+            if sort_order == 'asc':
+                queryset = queryset.annotate(count=Count('slikess')).order_by('count')
+            else:
+                queryset = queryset.annotate(count=Count('slikess')).order_by('-count')
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        sort_by = self.request.GET.get('sort', None)
+        sort_order = self.request.GET.get('order', 'asc')  # Default to ascending order
+        next_order = 'asc' if sort_order == 'desc' else 'desc'
+        projects_filters = ProjectFilter(self.request.GET, queryset=self.get_queryset())
+        context.update({
+            'form': projects_filters.form,
+            'next_order': next_order,
+            'current_sort': sort_by,
+        })
+        return context

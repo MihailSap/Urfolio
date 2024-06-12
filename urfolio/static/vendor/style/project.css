@@ -46,6 +46,9 @@ main{
 
 .project-img{
     width: 550px;
+    display: block;
+    border-radius: 20px;
+    object-fit: cover;
 }
 
 .project__card{
