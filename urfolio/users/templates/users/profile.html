@@ -21,25 +21,38 @@
             </div>
             <div class="user-info">
                 <div class="user-info__top">
-                    <h2>{{ user.username }}</h2>
+                    <h2>{{ profile.user.username }}</h2>
                     <a href="{% url 'profile-management' %}" class="standart-text_light-grey">Редактировать профиль</a>
                 </div>
                 <div class="user-description">
                     <p><b>Описание профиля</b></p> <br>
-                    <p class="description" id="description">{{ user.profile.description }}</p>
+                    <p class="description" id="description">{{ profile.description }}</p>
                 </div>
                 <div class="user-links">
-                    <a href="{{ user.profile.github_link }}"><img src="{% static 'vendor/assets/img/github.png' %}" width="40px" alt=""></a>
-                    <a href="{{ user.profile.figma_link }}"><img src="{% static 'vendor/assets/img/figma.png' %}" width="40px" alt=""></a>
-                    <a href="{{ user.profile.vk_link }}"><img src="{% static 'vendor/assets/img/vk.png' %}" width="40px" alt=""></a>
-                    <a href="{{ user.profile.tg_link }}"><img src="{% static 'vendor/assets/img/tg.png' %}" width="40px" alt=""></a>
-                    <a href="{{ user.profile.could_link }}"><img src="{% static 'vendor/assets/img/could.png' %}" width="40px" alt=""></a>
+                    <a href="{{ profile.github_link }}"><img src="{% static 'vendor/assets/img/github.png' %}" width="40px" alt=""></a>
+                    <a href="{{ profile.figma_link }}"><img src="{% static 'vendor/assets/img/figma.png' %}" width="40px" alt=""></a>
+                    <a href="{{ profile.vk_link }}"><img src="{% static 'vendor/assets/img/vk.png' %}" width="40px" alt=""></a>
+                    <a href="{{ profile.tg_link }}"><img src="{% static 'vendor/assets/img/tg.png' %}" width="40px" alt=""></a>
+                    <a href="{{ profile.could_link }}"><img src="{% static 'vendor/assets/img/could.png' %}" width="40px" alt=""></a>
                 </div>
             </div>
         </div>
-    {% for project in projects %}
-    {{ project.name }}
-    {% endfor %}
+
+    <p>User Projects:</p>
+        {% for project in projects %}
+            {% if project.author == profile.user %}
+                <p>{{ project.name }}</p>
+                <img src="{{ project.image.url }}" alt="">
+            {% endif %}
+        {% endfor %}
+
+        <p>User likes</p>
+        {% for project in projects %}
+            {% if profile.user in project.slikess.all %}
+                <p>{{ project.name }}</p>
+                <img src="{{ project.image.url }}" alt="">
+            {% endif %}
+        {% endfor %}
         <div class="user-project__wrapper">
             <div class="user-project">
                 <button class="profile-list" id="button_user_project">

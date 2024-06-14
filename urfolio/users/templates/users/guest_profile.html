@@ -1,0 +1,203 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'vendor/style/profile.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/style/standart.css' %}">
+</head>
+<body>
+    <header>
+        <a href="/"><img src="{% static 'vendor/assets/img/logo.png' %}" alt="Логотип"></a>
+    </header>
+    <hr>
+    <main>
+        <div class="profile-info">
+            <div class="profile-avatar">
+                <img src="{{ profile.user.profile.image.url }}" alt="">
+            </div>
+            <div class="user-info">
+                <div class="user-info__top">
+                    <h2>{{ profile.user.username }}</h2>
+                </div>
+                <div class="user-description">
+                    <p><b>Описание профиля</b></p> <br>
+                    <p class="description" id="description"><h2>{{ profile.user.username }}</h2></p>
+                </div>
+                <div class="user-links">
+                    {% if profile.user.profile.github_link %}
+                        <a href="{{ profile.user.profile.github_link }}"><img src="{% static 'vendor/assets/img/github.png' %}" width="40px" alt=""></a>
+                    {% endif %}
+                    {% if profile.user.profile.figma_link %}
+                        <a href="{{ profile.user.profile.figma_link }}"><img src="{% static 'vendor/assets/img/figma.png' %}" width="40px" alt=""></a>
+                    {% endif %}
+                    {% if profile.user.profile.vk_link %}
+                        <a href="{{ profile.user.profile.vk_link }}"><img src="{% static 'vendor/assets/img/vk.png' %}" width="40px" alt=""></a>
+                    {% endif %}
+                    {% if profile.user.profile.tg_link %}
+                        <a href="{{ profile.user.profile.tg_link }}"><img src="{% static 'vendor/assets/img/tg.png' %}" width="40px" alt=""></a>
+                    {% endif %}
+                    {% if profile.user.profile.could_link %}
+                        <a href="{{ profile.user.profile.could_link }}"><img src="{% static 'vendor/assets/img/could.png' %}" width="40px" alt=""></a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <p>User Projects:</p>
+        {% for project in projects %}
+            <p>{{ project.name }}</p>
+            <img src="{{ project.image.url }}" alt="">
+        {% endfor %}
+
+        <p>User likes</p>
+        {% for project in projects %}
+            {% if profile.user in project.slikess.all %}
+                <p>{{ project.name }}</p>
+                <img src="{{ project.image.url }}" alt="">
+            {% endif %}
+        {% endfor %}
+
+        <div class="user-project__wrapper">
+            <div class="user-project">
+                <button class="profile-list" id="button_user_project">
+                    <svg id="svg_list_status" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="8" x2="8" y2="16" stroke="#95A1BB" stroke-width="2"/>
+                        <line y1="8" x2="16" y2="8" stroke="#95A1BB" stroke-width="2"/>
+                    </svg>
+                    <h1>Проекты пользователя</h1>
+                </button>
+                <div class="list-project__wrapper" id="list_project">
+                    <div class="list__wrapper">
+                        <button id="user_left_btn">
+                            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M17.9091 15.2652C17.5032 14.8906 16.8706 14.9159 16.496 15.3217L13.2652 18.8217C12.9116 19.2047 12.9116 19.7952 13.2652 20.1782L16.496 23.6783C16.8706 24.0841 17.5032 24.1094 17.909 23.7348C18.3149 23.3602 18.3402 22.7276 17.9656 22.3217L16.284 20.5L26 20.5C26.5523 20.5 27 20.0523 27 19.5C27 18.9477 26.5523 18.5 26 18.5L16.284 18.5L17.9656 16.6783C18.3402 16.2725 18.3149 15.6398 17.9091 15.2652Z" fill="#777E90"/>
+                            </svg>
+                        </button>
+                        <ul class="list-project" id="list_user_project">
+                            <li class="project">
+                                <h2>My Project 1</h2>
+                                <div class="project__wrapper">
+                                    <div class="project__img">
+                                        <img src="../assets/img/project-photo.png" alt="">
+                                    </div>
+                                    <div class="interact-project">
+                                        <a href="#" class="standart-text_light-grey project-profile_text">Редактировать</a>
+                                        <a href="#" class="standart-text_light-grey project-profile_text">Удалить</a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="project">
+                                <h2>My Project 1</h2>
+                                <div class="project__wrapper">
+                                    <div class="project__img">
+                                        <img src="../assets/img/project-photo.png" alt="">
+                                    </div>
+                                    <div class="interact-project">
+                                        <a href="./projectAdd.html" class="standart-text_light-grey project-profile_text">Редактировать</a>
+                                        <a href="#" class="standart-text_light-grey project-profile_text">Удалить</a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="project">
+                                <h2>My Project 1</h2>
+                                <div class="interaction-project">
+                                    <div class="project__img">
+                                        <img src="../assets/img/project-photo.png" alt="">
+                                    </div>
+                                    <div class="interact-project">
+                                        <a href="#" class="standart-text_light-grey project-profile_text">Редактировать</a>
+                                        <a href="#" class="standart-text_light-grey project-profile_text">Удалить</a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="project">
+                                <h2>My Project 1</h2>
+                                <div class="interaction-project">
+                                    <div class="project__img">
+                                        <img src="../assets/img/project-photo.png" alt="">
+                                    </div>
+                                    <div class="interact-project">
+                                        <a href="#" class="standart-text_light-grey project-profile_text">Редактировать</a>
+                                        <a href="#" class="standart-text_light-grey project-profile_text">Удалить</a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <button id="user_right_btn">
+                            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M22.0909 15.2652C22.4968 14.8906 23.1294 14.9159 23.504 15.3217L26.7348 18.8217C27.0884 19.2047 27.0884 19.7952 26.7348 20.1782L23.504 23.6783C23.1294 24.0841 22.4968 24.1094 22.091 23.7348C21.6851 23.3602 21.6598 22.7276 22.0344 22.3217L23.716 20.5L14 20.5C13.4477 20.5 13 20.0523 13 19.5C13 18.9477 13.4477 18.5 14 18.5L23.716 18.5L22.0344 16.6783C21.6598 16.2725 21.6851 15.6398 22.0909 15.2652Z" fill="#777E90"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <a href="#">
+                        <div class="sumbit-btn">Добавить проект</div>
+                    </a>
+                </div>
+            </div>
+            <div class="user-project">
+                <button class="profile-list" id="button_liked_project">
+                    <svg id="svg_list_status" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="8" x2="8" y2="16" stroke="#95A1BB" stroke-width="2"/>
+                        <line y1="8" x2="16" y2="8" stroke="#95A1BB" stroke-width="2"/>
+                    </svg>
+                    <h1>Пользователь оценил</h1>
+                </button>
+                <div class="list-project__wrapper" id="list_project">
+                    <div class="list__wrapper">
+                        <button id="liked_left_btn">
+                            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M17.9091 15.2652C17.5032 14.8906 16.8706 14.9159 16.496 15.3217L13.2652 18.8217C12.9116 19.2047 12.9116 19.7952 13.2652 20.1782L16.496 23.6783C16.8706 24.0841 17.5032 24.1094 17.909 23.7348C18.3149 23.3602 18.3402 22.7276 17.9656 22.3217L16.284 20.5L26 20.5C26.5523 20.5 27 20.0523 27 19.5C27 18.9477 26.5523 18.5 26 18.5L16.284 18.5L17.9656 16.6783C18.3402 16.2725 18.3149 15.6398 17.9091 15.2652Z" fill="#777E90"/>
+                            </svg>
+                        </button>
+                        <ul class="list-project" id="list_liked_project">
+                            <li class="project">
+                                <h2>My Project 1</h2>
+                                <div class="project__wrapper">
+                                    <div class="project__img">
+                                        <img src="../assets/img/project-photo.png" alt="">
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="project">
+                                <h2>My Project 1</h2>
+                                <div class="project__wrapper">
+                                    <div class="project__img">
+                                        <img src="../assets/img/project-photo.png" alt="">
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="project">
+                                <h2>My Project 1</h2>
+                                <div class="interaction-project">
+                                    <div class="project__img">
+                                        <img src="../assets/img/project-photo.png" alt="">
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="project">
+                                <h2>My Project 1</h2>
+                                <div class="interaction-project">
+                                    <div class="project__img">
+                                        <img src="../assets/img/project-photo.png" alt="">
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <button id="liked_right_btn">
+                            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M22.0909 15.2652C22.4968 14.8906 23.1294 14.9159 23.504 15.3217L26.7348 18.8217C27.0884 19.2047 27.0884 19.7952 26.7348 20.1782L23.504 23.6783C23.1294 24.0841 22.4968 24.1094 22.091 23.7348C21.6851 23.3602 21.6598 22.7276 22.0344 22.3217L23.716 20.5L14 20.5C13.4477 20.5 13 20.0523 13 19.5C13 18.9477 13.4477 18.5 14 18.5L23.716 18.5L22.0344 16.6783C21.6598 16.2725 21.6851 15.6398 22.0909 15.2652Z" fill="#777E90"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="{% static 'vendor/js/profile.js' %}" defer></script>
+</body>
+</html>

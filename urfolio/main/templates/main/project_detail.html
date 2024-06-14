@@ -55,6 +55,7 @@
                     </div>
                     <p class="progect__description"><b>Описание проекта</b><br> <span id="progect__description">{{ project.description }}</span></p>
                     <p>Author: {{ project.author }}</p>
+                    <p>Author: <a href="{% url 'profile' project.author.username %}">{{ project.author }}</a>></p>
                 </div>
                 <div class="interact-project">
                     {% if object.author == user %}

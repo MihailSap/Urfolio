@@ -21,7 +21,11 @@
             <div class="edit-description">
                 <div class="user-photo">
                     <img src="{{ request.user.profile.image.url }}" alt="">
-                    {{ p_form.image }}
+                    <label class="input-file">
+                            {{ p_form.image }}
+                            <span>Выберите файл</span>
+                        </label>
+
                     <!--<form method="post" enctype="multipart/form-data">
                         <label class="input-file">
                             <input type="file" name="file">
@@ -61,7 +65,10 @@
                         </div>
                     </div>
                 </div>
-                <button class="btn btn-outline-info" type="submit">Update</button>
+                <div class="edit-password">
+                    <button type="submit">Update</button>
+                </div>
+
                 <div class="edit-password">
                     <h2>Изменить пароль</h2>
                     <label for="name"><h3>Старый пароль</h3></label>

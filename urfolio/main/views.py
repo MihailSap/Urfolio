@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 from django.urls import reverse, reverse_lazy
 from .filters import ProjectFilter
-from .forms import CommentCreateForm, ReplyCreateForm
+from .forms import CommentCreateForm, ReplyCreateForm, ProjectCreateForm
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect, HttpResponse
@@ -87,7 +87,7 @@ class ProjectDetailView(DetailView): # Так правильнее
 # СОЗДАНИЕ ПРОЕКТА
 class ProjectCreateView(CreateView):
     model = Project
-    fields = ['image', 'name', 'description', 'category', 'course_number', 'year']
+    form_class = ProjectCreateForm
 
     def form_valid(self, form):
         form.instance.author = self.request.user

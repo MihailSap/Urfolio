@@ -29,7 +29,7 @@
                 <a href="" id="profile-link" class="user-profile__link user__text_DM-sans">
                     <p class="nick-name" id="user-name">
                         {% if user.is_authenticated %}
-                            <a href="{% url 'profile' %}">{{ user }}</a>
+                            <a href="{% url 'profile' request.user.username %}">{{ user }}</a>
                         {% endif %}
                     </p>
                     <div class="user-avatar"></div>

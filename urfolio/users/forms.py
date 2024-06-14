@@ -25,42 +25,56 @@ class UserCreationForm(UserCreationForm):
         model = User
         fields = ('username', 'email')
 
-
-# class UserUpdateForm(forms.ModelForm):
-#     email = forms.EmailField()
-#
-#     class Meta:
-#         model = User
-#         fields = ('username', 'email')
-#
-#
-# class ProfileUpdateForm(forms.ModelForm):
-#
-#     class Meta:
-#         model = Profile
-#         fields = ['image', 'description',
-#                   'vk_link', 'github_link', 'figma_link', 'tg_link', 'cloud_link']
-
 class UserUpdateForm(forms.ModelForm):
     username = forms.CharField(widget=forms.TextInput(attrs={
-        'placeholder': 'Введите имя'
+        'placeholder': 'Введите имя',
+        'id':'name',
+        'class': 'standart-input',
+        'name':'user-name'
     }))
     email = forms.EmailField(required=False)
-
     class Meta:
         model = User
         fields = ('username', 'email')
 
 
 class ProfileUpdateForm(forms.ModelForm):
-    image = forms.ImageField(widget=forms.FileInput(attrs={}), required=False)
-    description = forms.CharField(widget=forms.Textarea(attrs={}), required=False)
+    image = forms.ImageField(widget=forms.FileInput(attrs={
+        'type': 'file',
+        'name': 'file',
 
-    vk_link = forms.URLField(required=False)
-    github_link = forms.URLField(widget=forms.URLInput(attrs={}), required=False)
-    figma_link = forms.URLField(widget=forms.URLInput(attrs={}), required=False)
-    tg_link = forms.URLField(widget=forms.URLInput(attrs={}), required=False)
-    cloud_link = forms.URLField(widget=forms.URLInput(attrs={}), required=False)
+    }), required=False)
+    description = forms.CharField(widget=forms.Textarea(attrs={
+        'id': 'descript',
+        'class': 'standart-input descript',
+        'placeholder': 'Введите описание профиля'
+    }), required=False)
+
+    vk_link = forms.URLField(widget=forms.URLInput(attrs={
+        'id': 'name',
+        'placeholder': 'Добавьте ссылку на Ваш аккаунт в VK',
+        'class': 'standart-input'
+    }), required=False)
+    github_link = forms.URLField(widget=forms.URLInput(attrs={
+        'id': 'name',
+        'placeholder': 'Добавьте ссылку на Ваш аккаунт в GitHub',
+        'class': 'standart-input'
+    }), required=False)
+    figma_link = forms.URLField(widget=forms.URLInput(attrs={
+        'id': 'name',
+        'placeholder': 'Добавьте ссылку на Ваш аккаунт в Figma',
+        'class': 'standart-input'
+    }), required=False)
+    tg_link = forms.URLField(widget=forms.URLInput(attrs={
+        'id': 'name',
+        'placeholder': 'Добавьте ссылку на Ваш аккаунт в Telegram',
+        'class': 'standart-input'
+    }), required=False)
+    cloud_link = forms.URLField(widget=forms.URLInput(attrs={
+        'id': 'name',
+        'placeholder': 'Добавьте ссылку на Ваш аккаунт в облаке',
+        'class': 'standart-input'
+    }), required=False)
     class Meta:
         model = Profile
         fields = ['image', 'description',
