@@ -30,7 +30,7 @@ class UserUpdateForm(forms.ModelForm):
         'placeholder': 'Введите имя',
         'id':'name',
         'class': 'standart-input',
-        'name':'user-name'
+        'name':'user-name',
     }))
     email = forms.EmailField(required=False)
     class Meta:
