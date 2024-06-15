@@ -42,7 +42,11 @@
         {% for project in projects %}
             {% if project.author == profile.user %}
                 <p>{{ project.name }}</p>
-                <img src="{{ project.image.url }}" alt="">
+                <a href="{% url 'projects:project_update' project.id %}"><span class="interaction-profile__text">Редактировать проект</span></a>
+                <a href="{% url 'projects:project_delete' project.id %}"><span class="interaction-profile__text">Удалить</span></a>
+                <a href="{% url 'projects:project_detail' pk=project.id %}">
+                    <img src="{{ project.image.url }}" width="400" height="300" alt="">
+                </a>
             {% endif %}
         {% endfor %}
 
@@ -50,7 +54,9 @@
         {% for project in projects %}
             {% if profile.user in project.slikess.all %}
                 <p>{{ project.name }}</p>
-                <img src="{{ project.image.url }}" alt="">
+                <a href="{% url 'projects:project_detail' pk=project.id %}">
+                    <img src="{{ project.image.url }}" width="400" height="300" alt="">
+                </a>
             {% endif %}
         {% endfor %}
         <div class="user-project__wrapper">

@@ -20,13 +20,16 @@
             {% csrf_token %}
             <div class="project-info">
                 <div class="project-img">
-                    <img src="../assets/img/project-photo.png" alt="">
+                    {% if project.image.url %}
+                        <img src="{{ project.image.url }}" alt="Текущее изображение">
+                    {% else %}
+                        <img src="{% static 'vendor/assets/img/project-photo.png' %}" alt="Текущее изображение">
+                    {% endif %}
                     <!--<form method="post" enctype="multipart/form-data">-->
                         <label class="input-file">
-                            <!--<input type="file" id="first" name="file">-->
-                            <span>Выберите файл</span>
                             {{ form.image }}
-                            <!--<img id="check" src="../assets/img/icons8-галочка.gif" alt="">-->
+                            <span>Выберите файл</span>
+                            <img id="check" src="{% static 'vendor/assets/img/icons8.gif' %}" alt="Галочка появилась">
                         </label>
                     <!--</form>-->
                 </div>
@@ -45,6 +48,10 @@
                         <label for="year">Год создания</label>
                         {{ form.year }}
                         <!--<button id="year">Выберите год создания проекта<img src="../assets/img/botton_arrow.svg" alt=""></button>-->
+                    </div>
+                    <div class="type-list">
+                        <label for="year">Номер курса</label>
+                        {{ form.course_number }}
                     </div>
                     <div class="type__wrapper">
                         <label for="people">Участники</label>
@@ -69,7 +76,7 @@
                                     <label class="input-file">
                                         <input type="file" id="second" name="file">
                                         <span>Выберите файл</span>
-                                        <img id="check" src="../assets/img/icons8-галочка.gif" alt="">
+                                        <img id="check" src="{% static 'vendor/assets/img/icons8.gif' %}" alt="">
                                     </label>
                                 </div>
                             </div>
@@ -81,7 +88,7 @@
                                     <label class="input-file">
                                         <input type="file" id="third" name="file">
                                         <span>Выберите файл</span>
-                                        <img id="check" src="../assets/img/icons8-галочка.gif" alt="">
+                                        <img id="check" src="{% static 'vendor/assets/img/icons8.gif' %}" alt="">
                                     </label>
                                 </div>
                             </div>
@@ -93,7 +100,7 @@
                                     <label class="input-file">
                                         <input type="file" id="fourth" name="file">
                                         <span>Выберите файл</span>
-                                        <img id="check" src="../assets/img/icons8-галочка.gif" alt="">
+                                        <img id="check" src="{% static 'vendor/assets/img/icons8.gif' %}" alt="">
                                     </label>
                                 </div>
                             </div>
@@ -105,7 +112,7 @@
                                     <label class="input-file">
                                         <input type="file" name="file">
                                         <span>Выберите файл</span>
-                                        <img src="../assets/img/icons8-галочкаgif"     alt="">
+                                        <img id="check" src="{% static 'vendor/assets/img/icons8.gif' %}" alt="">
                                     </label>
                                 </div>
                             </div>
@@ -123,12 +130,8 @@
                 {{ form.description }}
                 <!--<textarea name="descrip" placeholder="Введите описание проекта"></textarea>-->
             </div>
-            <p>Номер курса:
-                {{ form.course_number }}
-            </p>
             <div class="interact-project">
                 <button type="submit" id="sumbit" class="interact sumbit-btn">Добавить проект/применить изменения</button>
-                <button class="interact">Удалить проект</button>
             </div>
         </form>
     </main>

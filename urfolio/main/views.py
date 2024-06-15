@@ -73,16 +73,27 @@ def ProjectDeleteView(request, pk):
     return redirect(reverse_lazy('projects:index1'))
 
 # ОТОБРАЖЕНИЕ ПРОЕКТА НА ОТДЕЛЬНОЙ СТРАНИЦЕ
-class ProjectDetailView(DetailView): # Так правильнее
-    model = Project
+# class ProjectDetailView(DetailView): # Так правильнее
+#     model = Project
+#
+#     def get_context_data(self, *args, **kwargs):
+#         context = super(ProjectDetailView, self).get_context_data(*args, **kwargs)
+#         commentform = CommentCreateForm()
+#         replyform = ReplyCreateForm()
+#         context['commentform'] = commentform
+#         context['replyform'] = replyform
+#         return context
 
-    def get_context_data(self, *args, **kwargs):
-        context = super(ProjectDetailView, self).get_context_data(*args, **kwargs)
-        commentform = CommentCreateForm()
-        replyform = ReplyCreateForm()
-        context['commentform'] = commentform
-        context['replyform'] = replyform
-        return context
+def project_detail_view(request, pk):
+    project = get_object_or_404(Project, pk=pk)
+    commentform = CommentCreateForm()
+    replyform = ReplyCreateForm()
+    context = {
+        'project': project,
+        'commentform': commentform,
+        'replyform': replyform,
+    }
+    return render(request, 'main/project_detail.html', context)
 
 # СОЗДАНИЕ ПРОЕКТА
 class ProjectCreateView(CreateView):
@@ -94,19 +105,41 @@ class ProjectCreateView(CreateView):
         return super().form_valid(form)
 
 # РЕДАКТИРОВАНЕ ПРОФИЛЯ
-class ProjectUpdateView(UserPassesTestMixin, UpdateView):
-    model = Project
-    fields = ['image', 'name', 'description', 'category', 'course_number', 'year']
+# class ProjectUpdateView(UserPassesTestMixin, UpdateView):
+#     model = Project
+#     fields = ['image', 'name', 'description', 'category', 'course_number', 'year']
+#
+#     def form_valid(self, form):
+#         form.instance.author = self.request.user
+#         return super().form_valid(form)
+#
+#     def test_func(self): # Пользователь может редактировать только свои проекты
+#         project = self.get_object()
+#         if self.request.user == project.author:
+#             return True
+#         return False
 
-    def form_valid(self, form):
-        form.instance.author = self.request.user
-        return super().form_valid(form)
 
-    def test_func(self): # Пользователь может редактировать только свои проекты
-        project = self.get_object()
-        if self.request.user == project.author:
-            return True
-        return False
+def project_management(request, pk=None):
+    if pk:
+        project = get_object_or_404(Project, id=pk)
+    else:
+        project = None
+
+    if request.method == 'POST':
+        form = ProjectCreateForm(request.POST, request.FILES, instance=project)
+        if form.is_valid():
+            project = form.save()
+            return redirect(reverse('projects:project_detail', kwargs={'pk': project.id}))
+    else:
+        form = ProjectCreateForm(instance=project)
+
+    context = {
+        'form': form,
+        'project': project
+    }
+    return render(request, 'main/project_form.html', context)
+
 
 class ProjectListView(ListView):
     model = Project

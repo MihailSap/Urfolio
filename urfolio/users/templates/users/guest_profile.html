@@ -49,15 +49,21 @@
 
         <p>User Projects:</p>
         {% for project in projects %}
-            <p>{{ project.name }}</p>
-            <img src="{{ project.image.url }}" alt="">
+            {% if project.author == profile.user %}
+                <p>{{ project.name }}</p>
+                <a href="{% url 'projects:project_detail' pk=project.id %}">
+                    <img src="{{ project.image.url }}" width="400" height="300" alt="">
+                </a>
+            {% endif %}
         {% endfor %}
 
         <p>User likes</p>
         {% for project in projects %}
             {% if profile.user in project.slikess.all %}
                 <p>{{ project.name }}</p>
-                <img src="{{ project.image.url }}" alt="">
+                <a href="{% url 'projects:project_detail' pk=project.id %}">
+                    <img src="{{ project.image.url }}" width="400" height="300" alt="">
+                </a>
             {% endif %}
         {% endfor %}
 

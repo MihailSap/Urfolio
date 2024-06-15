@@ -60,7 +60,7 @@ def profile(request, username):
         else:
             profile = None  # Если профиля нет и пользователь не текущий, можно вернуть 404 или другое поведение
 
-    projects = Project.objects.all()  # Предполагается, что у проекта есть связь с пользователем
+    projects = Project.objects.all()
 
     context = {
         'profile': profile,
