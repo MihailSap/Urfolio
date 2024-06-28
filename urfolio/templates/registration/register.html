@@ -18,19 +18,31 @@
         <div class="login__wrapper">
             <h1>Добро пожаловать!</h1>
             <form class="login" action="{% url 'register' %}" method="post">
+                {% csrf_token %}
+                {% if form.non_field_errors %}
+                    <div class="errors">
+                        {% for error in form.non_field_errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
                 <label for="{{ form.username.id_for_label }}">Имя пользователя</label>
-                {% csrf_token %}
+                {{ form.username.errors }}
                 {{ form.username }}
+
                 <label for="{{ form.email.id_for_label }}">E-mail</label>
-                {% csrf_token %}
+                {{ form.email.errors }}
                 {{ form.email }}
+
                 <label for="{{ form.password1.id_for_label }}">Введите пароль</label>
-                {% csrf_token %}
+                {{ form.password1.errors }}
                 {{ form.password1 }}
+
                 <label for="{{ form.password2.id_for_label }}">Подтвердите пароль</label>
-                {% csrf_token %}
+                {{ form.password2.errors }}
                 {{ form.password2 }}
-                <a href="#" class="standart-text_light-grey">Забыли пароль?</a>
+                <!--<a href="#" class="standart-text_light-grey">Забыли пароль?</a>-->
                 <button type="submit" class="sumbit-btn sumbit-text">Войти</button>
             </form>
         </div>
@@ -42,4 +54,3 @@
     </footer>
 </body>
 </html>
-

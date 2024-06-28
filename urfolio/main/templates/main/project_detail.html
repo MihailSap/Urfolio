@@ -15,7 +15,6 @@
         <nav>
             <a href="/"><img src="{% static 'vendor/assets/img/logo.png' %}" class="logo" alt="Логотип"></a>
             <div class="user-profile user__text_DM-sans">
-
                 {% if user.is_authenticated %}
                     <form action="{% url 'logout' %}" method="post">
                         {% csrf_token %}
@@ -35,65 +34,84 @@
                             </a>
                         {% endif %}
                     </p>
-                    <div class="user-avatar"></div>
+                    <div class="user-avatar">
+                        {% if user.is_authenticated %}
+                            <img src="{{ user.profile.image.url }}" alt="">
+                        {% endif %}
+                    </div>
                 </a>
             </div>
         </nav>
     </header>
+    <hr>
     <main>
         <div class="project__card">
-            <img src="{{ project.image.url }}" class ="project-img" alt="">
-        <div class="like__wrapper">
-                                    {% include 'snippets/likes.html' %}
-                                    <!--<button type="button" class="info__rating-project" id="like-button"><img src="{#% static 'vendor/assets/img/Likes.png' %#}" id="like-icon" alt="Иконка лайка"><span class="activities-number" id="like-number">0</span></button>-->
-                                </div>
+            <div class="project-avatar">
+                <img src="{{ project.image.url }}" class ="project-img" alt="">
+                    <div class="user-links">
+                    {% if project.github_link %}
+                        <a href="{{ project.github_link }}"><img src="{% static 'vendor/assets/img/github.png' %}" width="40px" alt=""></a>
+                    {% endif %}
+                    {% if project.figma_link %}
+                        <a href="{{ project.figma_link }}"><img src="{% static 'vendor/assets/img/figma.png' %}" width="40px" alt=""></a>
+                    {% endif %}
+                    {% if project.vk_link %}
+                        <a href="{{ project.vk_link }}"><img src="{% static 'vendor/assets/img/vk.png' %}" width="40px" alt=""></a>
+                    {% endif %}
+                    {% if project.tg_link %}
+                        <a href="{{ project.tg_link }}"><img src="{% static 'vendor/assets/img/tg.png' %}" width="40px" alt=""></a>
+                    {% endif %}
+                    {% if project.cloud_link %}
+                        <a href="{{ project.cloud_link }}"><img src="{% static 'vendor/assets/img/could.png' %}" width="40px" alt=""></a>
+                    {% endif %}
+                    </div>
+            </div>
             <div class="project-info__wrapper">
                 <div class="project__title">
                     <a href="#" id="user-project__link">
                         <h1 id="name-progect">{{ project.name }}</h1>
                     </a>
                     <div class="typeDate-project">
-                        <span id="type-project">Тип проекта</span><span id="project-date">2023-2024</span>
+                        <span id="type-project">{{ project.category }}</span><span id="project-date">{{ project.year }}</span>
                     </div>
                     <p class="progect__description"><b>Описание проекта</b><br> <span id="progect__description">{{ project.description }}</span></p>
-                    <p>Author: <a href="{% url 'profile' project.author.username %}">{{ project.author }}</a></p>
-                </div>
-                <div class="interact-project">
-                    {% if object.author == user %}
-                        <a href="{% url 'projects:project_update' object.id %}"><span class="interaction-profile__text">Редактировать проект</span></a>
-                        <a href="{% url 'projects:project_delete' object.id %}"><span class="interaction-profile__text">Удалить</span></a>
+                    {% if project.members %}
+                        <p class="progect__description"><b>Участники проекта</b><br> <span id="progect__description">{{ project.members }}</span></p>
                     {% endif %}
+                    <p>Проект опубликовал: <a href="{% url 'profile' project.author.username %}">{{ project.author }}</a></p>
                 </div>
-
-                <div class="project__information">
-                    <div class="project__rating">
-                        <!-- ЛАЙКИ БЫЛИ ТУТ, НО ПОЧЕМУ ТО ПЕРЕСТАЛИ ОТОБРАЖАТЬСЯ-->
-                        <div class="info__rating-project">
-                            <button type="button" id="share"><img src="{% static 'vendor/assets/img/Share.png' %}" alt="Иконка поделиться"></button>
+                <div class="interact-project__wrapper">
+                    {% if project.author == user %}
+                    <div class="interact-project">
+                            <a href="{% url 'projects:project_delete' project.id %}"><span class="interaction-profile__text">Удалить</span></a>
+                            <a href="{% url 'projects:project_update' project.id %}"><span class="interaction-profile__text">Редактировать проект</span></a>
+                    </div>
+                    {% endif %}
+                    <div class="project__information">
+                        <div class="project__rating">
+                            <div class="like__wrapper">
+                                {% include 'snippets/likes.html' %}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="project-gallery">
-            <button id="left_btn">
-                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M17.9091 15.2652C17.5032 14.8906 16.8706 14.9159 16.496 15.3217L13.2652 18.8217C12.9116 19.2047 12.9116 19.7952 13.2652 20.1782L16.496 23.6783C16.8706 24.0841 17.5032 24.1094 17.909 23.7348C18.3149 23.3602 18.3402 22.7276 17.9656 22.3217L16.284 20.5L26 20.5C26.5523 20.5 27 20.0523 27 19.5C27 18.9477 26.5523 18.5 26 18.5L16.284 18.5L17.9656 16.6783C18.3402 16.2725 18.3149 15.6398 17.9091 15.2652Z" fill="#777E90"/>
-                </svg>
-            </button>
             <div class="gallery-feed">
-                <!-- НЕ КРУТЯТСЯ!!! -->
-                <img src="{% static 'vendor/assets/img/project-photo.png' %}" class="see-img" alt="">
-                <img src="{% static 'vendor/assets/img/project-photo.png' %}" class="see-img" alt="">
-                <img src="{% static 'vendor/assets/img/project-photo.png' %}" class="see-img" alt="">
-                <img src="{% static 'vendor/assets/img/project-photo.png' %}" class="see-img" alt="">
-                <!--<img src="../assets/img/logo.png" width="384" height="270" class="see-img" alt=""> ЗАЧЕМ ЗДЕСЬ ЛОГОТИП???-->
+                {% if project.photo1 %}
+                    <a href="{{ project.photo1.url }}"><img src="{{ project.photo1.url }}" class="see-img" width="400" height="300" alt=""></a>
+                {% endif %}
+                {% if project.photo2 %}
+                    <a href="{{ project.photo2.url }}"><img src="{{ project.photo2.url }}" class="see-img" width="400" height="300" alt=""></a>
+                {% endif %}
+                {% if project.photo3 %}
+                    <a href="{{ project.photo3.url }}"><img src="{{ project.photo3.url }}" class="see-img" width="400" height="300" alt=""></a>
+                {% endif %}
+                {% if project.photo4 %}
+                    <a href="{{ project.photo4.url }}"><img src="{{ project.photo4.url }}" class="see-img" width="400" height="300" alt=""></a>
+                {% endif %}
             </div>
-            <button id="right_btn">
-                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M22.0909 15.2652C22.4968 14.8906 23.1294 14.9159 23.504 15.3217L26.7348 18.8217C27.0884 19.2047 27.0884 19.7952 26.7348 20.1782L23.504 23.6783C23.1294 24.0841 22.4968 24.1094 22.091 23.7348C21.6851 23.3602 21.6598 22.7276 22.0344 22.3217L23.716 20.5L14 20.5C13.4477 20.5 13 20.0523 13 19.5C13 18.9477 13.4477 18.5 14 18.5L23.716 18.5L22.0344 16.6783C21.6598 16.2725 21.6851 15.6398 22.0909 15.2652Z" fill="#777E90"/>
-                </svg>
-            </button>
         </div>
         <div class="comments__wrapper">
             <div class="comments">
@@ -102,7 +120,6 @@
                     <form action="{% url 'projects:comment-sent' project.id %}" method="POST">
                         {% csrf_token %}
                         {{ commentform }}
-                        <!--<input type="text" placeholder="Поделитесь своим мнением">-->
                         <button class="sumbit-btn sumbit-text">Отправить <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M9.394 4.84355C9.66455 4.59382 10.0863 4.61068 10.3361 4.88123L12.4899 7.21454C12.7256 7.46991 12.7256 7.86353 12.4899 8.11891L10.3361 10.4523C10.0863 10.7228 9.66456 10.7397 9.39401 10.49C9.12346 10.2402 9.10659 9.81845 9.35632 9.5479L10.4774 8.33339L4.00004 8.33339C3.63185 8.33339 3.33337 8.03492 3.33337 7.66673C3.33337 7.29854 3.63185 7.00006 4.00004 7.00006L10.4774 7.00006L9.35633 5.78561C9.10659 5.51506 9.12346 5.09329 9.394 4.84355Z" fill="white"/>
                             </svg>
@@ -113,14 +130,13 @@
                     {% endif %}
                 </div>
                 {% if project.comments.count %}
-                    <h2>Количество комментариев: {{ project.comments.count }}</h2>
+                    <h2>Количество комментариев: {{ project.total_comments_and_replies }}</h2>
                 {% else %}
                     <h2>Комментариев ещё нет</h2>
                 {% endif %}
                 {% for comment in project.comments.all %}
                 <div class="user-comments" id="user-comments">
                     <div class="user-img">
-                        <!--<img src="" id="user-img" alt="">-->
                         <img src="{{ comment.author.profile.image.url }}">
                     </div>
                     <div class="comment-text__wrapper">
@@ -144,11 +160,10 @@
                 {% for reply in comment.replies.all %}
                 <div class="answer-comments" id="answer_comments">
                     <div class="user-img">
-                        <img src="" id="user-img" alt="">
+                        <img src="{{ reply.author.profile.image.url }}">
                     </div>
                     <div class="comment-text__wrapper">
                         <div class="user-text">
-                            <img src="{{ reply.author.profile.image.url }}">
                             <a href="{% url 'profile' reply.author.username %}">
                                 <h4 id="user-name">{{ reply.author.username }}</h4>
                             </a>
@@ -157,24 +172,25 @@
                         <div class="comment-info">
                             <span id="time-comment" class="time standart-text_light-grey">{{ reply.created }}</span>
                             <span id="answer_to_comment" class="answer">Ответить</span>
-                            {% if user.is_authenticated and comment.author == user %}
+                            {% if user.is_authenticated and reply.author == user %}
                                 <a href="{% url 'projects:reply-delete' reply.id %}">Delete</a>
                             {% endif %}
                         </div>
                     </div>
                 </div>
                         {% endfor %}
+                <div class="input-comments">
                     <form method="POST" autocomplete="off" action="{% url 'projects:reply-sent' comment.id %}">
                         {% csrf_token %}
                         {{ replyform }}
-                        <button type="submit">Submit</button>
+                        <button type="submit" class="sumbit-btn sumbit-text">Submit</button>
                     </form>
+                </div>
                 {% endfor %}
             </div>
             <button id="more_comments" class="user__text_DM-sans">Ещё комментарии</button>
         </div>
     </main>
-
     <script src="{% static 'vendor/js/project.js' %}" defer></script>
 </body>
 </html>

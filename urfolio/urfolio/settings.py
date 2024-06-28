@@ -25,7 +25,8 @@ SECRET_KEY = 'django-insecure-nsk@$#fv50vzy+y=tsb3rqbj=api++7w1y98#^#nw%p9b@+=bp
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
+CSRF_TRUSTED_ORIGINS = ["https://%2A.ngrok.io/", "https://156c-185-25-18-114.ngrok-free.app"]
 
 # Авторизация
 AUTH_USER_MODEL = 'users.User'
@@ -111,9 +112,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru' #Язык поменял с en-us
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Yekaterinburg'
 
 USE_I18N = True
 

@@ -1,18 +1,3 @@
-const likedLeftBtn = document.getElementById('liked_left_btn');
-const likedRightBtn = document.getElementById('liked_right_btn');
-const userHorizonScroll = document.getElementById('list_user_project');
-const likedHorizonScroll = document.getElementById('list_liked_project');
-
-likedRightBtn.addEventListener('click', ()=>{
-    likedHorizonScroll.style.scrollBehavior = "smooth";
-    likedHorizonScroll.scrollLeft += 466;
-});
-
-likedLeftBtn.addEventListener('click', ()=>{
-    likedHorizonScroll.style.scrollBehavior = "smooth";
-    likedHorizonScroll.scrollLeft -= 466;
-});
-
 
 var i = 0;
 const check = document.querySelectorAll("#check")
@@ -22,9 +7,6 @@ var statusImage = {
     third: 'not',
     fourth: 'not'
 };
-
-const submitButton = document.getElementById("sumbit");
-submitButton.disabled = true;
 
 document.getElementById('first').addEventListener('change', function(){
     if( this.value ){
@@ -37,9 +19,6 @@ document.getElementById('first').addEventListener('change', function(){
         };
     } else { // Если после выбранного тыкнули еще раз, но дальше cancel
         console.log( "Файл не выбран" );
-    }
-    if(i >= 4){
-        submitButton.disabled = false;
     }
 });
 
@@ -55,9 +34,6 @@ document.getElementById('second').addEventListener('change', function(){
     } else { // Если после выбранного тыкнули еще раз, но дальше cancel
         console.log( "Файл не выбран" );
     }
-    if(i >= 4){
-        submitButton.disabled = false;
-    }
 });
 
 document.getElementById('third').addEventListener('change', function(){
@@ -72,9 +48,6 @@ document.getElementById('third').addEventListener('change', function(){
     } else { // Если после выбранного тыкнули еще раз, но дальше cancel
         console.log( "Файл не выбран" );
     }
-    if(i >= 4){
-        submitButton.disabled = false;
-    }
 });
 
 document.getElementById('fourth').addEventListener('change', function(){
@@ -88,8 +61,5 @@ document.getElementById('fourth').addEventListener('change', function(){
         };
     } else { // Если после выбранного тыкнули еще раз, но дальше cancel
         console.log( "Файл не выбран" );
-    }
-    if(i >= 4){
-        submitButton.disabled = false;
     }
 });

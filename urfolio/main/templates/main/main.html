@@ -23,7 +23,7 @@
                 {% else %}
                     <form action="{% url 'login' %}" method="get">
                         {% csrf_token %}
-                        <button class="nick-name" type="submit">Войти</button>
+                        <button class="nick-name interaction-profile__text" type="submit">Войти</button>
                     </form>
                 {% endif %}
                 <a href="" id="profile-link" class="user-profile__link user__text_DM-sans">
@@ -32,7 +32,8 @@
                             <a href="{% url 'profile' request.user.username %}">{{ user }}</a>
                         {% endif %}
                     </p>
-                    <div class="user-avatar"></div>
+
+                    <div class="user-avatar">{% if user.is_authenticated %}<img src="{{ user.profile.image.url }}" alt="">{% endif %}</div>
                 </a>
             </div>
         </nav>
@@ -45,82 +46,50 @@
                     <h2>Сортировка</h2>
                     <hr>
                     <ul>
-                        <a href="?sort=name&order={{ next_order }}" class="btn btn-primary">
-                            по названию
+                        <a href="?sort=name&order={{ next_order }}" class="btn btn-primary setting__item standart-text_grey">
                             {% if current_sort == 'name' and next_order == 'asc' %}
-                                (Descending)
-                                <!--<svg id="sort-type_time" width="19" height="12" viewBox="0 0 19 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg id="sort-type_time" width="19" height="12" viewBox="0 0 19 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <line x1="17" y1="9.5" x2="12" y2="9.5" stroke="#95A1BB"/>
+                                    <line x1="17" y1="5.5" x2="7" y2="5.5" stroke="#95A1BB"/>
                                     <line x1="17" y1="1.5" x2="2" y2="1.5" stroke="#95A1BB"/>
-                                    <line x1="17" y1="5.5" x2="2" y2="5.5" stroke="#95A1BB"/>
-                                    <line x1="17" y1="9.5" x2="2" y2="9.5" stroke="#95A1BB"/>
-                                </svg>-->
+                                </svg>
                             {% elif current_sort == 'name' and next_order == 'desc' %}
-                                (Ascending)
-                                <!--<svg id="sort-type_time" width="19" height="12" viewBox="0 0 19 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <line x1="17" y1="1.5" x2="2" y2="1.5" stroke="#95A1BB"/>
-                                    <line x1="17" y1="5.5" x2="12" y2="5.5" stroke="#95A1BB"/>
-                                    <line x1="17" y1="9.5" x2="2" y2="9.5" stroke="#95A1BB"/>
-                                </svg>-->
-                            {% else %}
-                                <!--<svg id="sort-type_time" width="19" height="12" viewBox="0 0 19 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg id="sort-type_time" width="19" height="12" viewBox="0 0 19 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <line x1="17" y1="1.5" x2="12" y2="1.5" stroke="#95A1BB"/>
                                     <line x1="17" y1="5.5" x2="7" y2="5.5" stroke="#95A1BB"/>
                                     <line x1="17" y1="9.5" x2="2" y2="9.5" stroke="#95A1BB"/>
-                                </svg>-->
-                                (Sort it)
+                                </svg>
+                            {% else %}
+                                <svg id="sort-type_time" width="19" height="12" viewBox="0 0 19 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <line x1="17" y1="1.5" x2="2" y2="1.5" stroke="#95A1BB"/>
+                                    <line x1="17" y1="5.5" x2="2" y2="5.5" stroke="#95A1BB"/>
+                                    <line x1="17" y1="9.5" x2="2" y2="9.5" stroke="#95A1BB"/>
+                                </svg>
                             {% endif %}
-                            <!--<span class="standart-text_grey">по названию</span>-->
+                            <span class="standart-text_grey">по названию</span>
                         </a>
-
-
-                    <a href="?sort=slikess&order={{ next_order }}" class="btn btn-primary">
-                            по рейтингу
+                        <a href="?sort=slikess&order={{ next_order }}" class="btn btn-primary setting__item standart-text_grey">
                             {% if current_sort == 'slikess' and next_order == 'asc' %}
-                                (Descending)
-                                <!--<svg id="sort-type_time" width="19" height="12" viewBox="0 0 19 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg id="sort-type_time" width="19" height="12" viewBox="0 0 19 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <line x1="17" y1="9.5" x2="12" y2="9.5" stroke="#95A1BB"/>
+                                    <line x1="17" y1="5.5" x2="7" y2="5.5" stroke="#95A1BB"/>
+                                    <line x1="17" y1="1.5" x2="2" y2="1.5" stroke="#95A1BB"/>
+                                </svg>
+                            {% elif current_sort == 'slikess' and next_order == 'desc' %}
+                                <svg id="sort-type_time" width="19" height="12" viewBox="0 0 19 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <line x1="17" y1="1.5" x2="12" y2="1.5" stroke="#95A1BB"/>
                                     <line x1="17" y1="5.5" x2="7" y2="5.5" stroke="#95A1BB"/>
                                     <line x1="17" y1="9.5" x2="2" y2="9.5" stroke="#95A1BB"/>
-                                </svg>-->
-                            {% elif current_sort == 'slikess' and next_order == 'desc' %}
-                                (Ascending)
-                                <!--<svg id="sort-type_time" width="19" height="12" viewBox="0 0 19 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <line x1="17" y1="1.5" x2="2" y2="1.5" stroke="#95A1BB"/>
-                                    <line x1="17" y1="5.5" x2="12" y2="5.5" stroke="#95A1BB"/>
-                                    <line x1="17" y1="9.5" x2="2" y2="9.5" stroke="#95A1BB"/>
-                                </svg>-->
+                                </svg>
                             {% else %}
-                                (Sort it)
-                                <!--<svg id="sort-type_time" width="19" height="12" viewBox="0 0 19 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg id="sort-type_time" width="19" height="12" viewBox="0 0 19 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <line x1="17" y1="1.5" x2="2" y2="1.5" stroke="#95A1BB"/>
                                     <line x1="17" y1="5.5" x2="2" y2="5.5" stroke="#95A1BB"/>
                                     <line x1="17" y1="9.5" x2="2" y2="9.5" stroke="#95A1BB"/>
-                                </svg>-->
+                                </svg>
                             {% endif %}
-                        <!--<span class="standart-text_grey">по рейтингу</span>-->
-                    </a>
-
-                        <li class="setting__item">
-                            <button type="button" id="sorting-type">
-                                <svg id="sort-type_rating" width="19" height="12" viewBox="0 0 19 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <line x1="17" y1="1.5" x2="2" y2="1.5" stroke="#95A1BB"/>
-                                    <line x1="17" y1="5.5" x2="2" y2="5.5" stroke="#95A1BB"/>
-                                    <line x1="17" y1="9.5" x2="2" y2="9.5" stroke="#95A1BB"/>
-                                </svg>
-                                <span class="standart-text_grey">по рейтингу</span>
-                            </button>
-                        </li>
-
-                        <li class="setting__item">
-                            <button type="button" class="button_style-none" id="sorting-type">
-                                <svg id="sort-type_title" width="19" height="12" viewBox="0 0 19 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <line x1="17" y1="1.5" x2="2" y2="1.5" stroke="#95A1BB"/>
-                                    <line x1="17" y1="5.5" x2="2" y2="5.5" stroke="#95A1BB"/>
-                                    <line x1="17" y1="9.5" x2="2" y2="9.5" stroke="#95A1BB"/>
-                                </svg>
-                                <span class="standart-text_grey">по названию</span>
-                            </button>
-                        </li>
+                            <span class="standart-text_grey">по рейтингу</span>
+                        </a>
                     </ul>
                 </div>
                 <div class="feed-setting__filter">
@@ -128,72 +97,76 @@
                     <hr>
                     <form method="GET" action="{% url 'projects:index1' %}">
                         <ul>
-                        <li class="setting__item">
-                            <button type="button" class="button_style-none" id="filter-type">
-                                <svg class="close-filter__type" id="svg_project" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <line x1="8" x2="8" y2="16" stroke="#95A1BB" stroke-width="2"/>
-                                    <line y1="8" x2="16" y2="8" stroke="#95A1BB" stroke-width="2"/>
-                                </svg>
-                                <span class="standart-text_light-grey">тип проекта</span>
-                            </button>
-                            <div class="filter-type__item" id="type_item">
-                                <div class="filter-type__wrapper">
-                                    <label for="filter_site" class="standart-text_light-grey">{{ form.category }}</label>
+                            <li class="setting__item">
+                                <button type="button" class="button_style-none" id="filter-type">
+                                    <svg class="close-filter__type" id="svg_project" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <line x1="8" x2="8" y2="16" stroke="#95A1BB" stroke-width="2"/>
+                                        <line y1="8" x2="16" y2="8" stroke="#95A1BB" stroke-width="2"/>
+                                    </svg>
+                                    <span class="standart-text_light-grey">тип проекта</span>
+                                </button>
+                                <div class="filter-type__item" id="type_item">
+                                    <div class="filter-type__wrapper">
+                                        <label for="filter_site" class="standart-text_light-grey">{{ form.category }}</label>
+                                    </div>
                                 </div>
-                            </div>
-                        </li>
-                        <li class="setting__item">
-                            <button type="button" class="button_style-none" id="filter-type">
-                                <svg class="close-filter__year" id="svg_year" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <line x1="8" x2="8" y2="16" stroke="#95A1BB" stroke-width="2"/>
-                                    <line y1="8" x2="16" y2="8" stroke="#95A1BB" stroke-width="2"/>
-                                </svg>
-                                <span class="standart-text_light-grey">учебный год</span>
-                            </button>
-                            <div class="filter-type__item" id="type_item">
-                                <div class="filter-type__wrapper">
-                                    <label for="filterYear_22" class="standart-text_light-grey">{{ form.year }}</label>
+                            </li>
+                            <li class="setting__item">
+                                <button type="button" class="button_style-none" id="filter-type">
+                                    <svg class="close-filter__year" id="svg_year" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <line x1="8" x2="8" y2="16" stroke="#95A1BB" stroke-width="2"/>
+                                        <line y1="8" x2="16" y2="8" stroke="#95A1BB" stroke-width="2"/>
+                                    </svg>
+                                    <span class="standart-text_light-grey">учебный год</span>
+                                </button>
+                                <div class="filter-type__item" id="type_item">
+                                    <div class="filter-type__wrapper">
+                                        <label for="filterYear_22" class="standart-text_light-grey">{{ form.year }}</label>
+                                    </div>
                                 </div>
-                            </div>
-                        </li>
-                        <li class="setting__item">
-                            <button type="button" class="button_style-none" id="filter-type">
-                                <svg class="close-filter__course" id="svg_course" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <line x1="8" x2="8" y2="16" stroke="#95A1BB" stroke-width="2"/>
-                                    <line y1="8" x2="16" y2="8" stroke="#95A1BB" stroke-width="2"/>
-                                </svg>
-                                <span class="standart-text_light-grey">номер курса</span>
-                            </button>
-                            <div class="filter-type__item" id="type_item">
-                                <div class="filter-type__wrapper">
-                                    <label for="filter_course1" class="standart-text_light-grey">{{ form.course_number }}</label>
+                            </li>
+                            <li class="setting__item">
+                                <button type="button" class="button_style-none" id="filter-type">
+                                    <svg class="close-filter__course" id="svg_course" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <line x1="8" x2="8" y2="16" stroke="#95A1BB" stroke-width="2"/>
+                                        <line y1="8" x2="16" y2="8" stroke="#95A1BB" stroke-width="2"/>
+                                    </svg>
+                                    <span class="standart-text_light-grey">номер курса</span>
+                                </button>
+                                <div class="filter-type__item" id="type_item">
+                                    <div class="filter-type__wrapper">
+                                        <label for="filter_course1" class="standart-text_light-grey">{{ form.course_number }}</label>
+                                    </div>
                                 </div>
-                            </div>
-                        </li>
-                        <li class="setting__item">
-                            <button type="button" class="button_style-none" id="filter-type">
-                                <svg class="close-filter__author" id="svg_author" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <line x1="8" x2="8" y2="16" stroke="#95A1BB" stroke-width="2"/>
-                                    <line y1="8" x2="16" y2="8" stroke="#95A1BB" stroke-width="2"/>
-                                </svg>
-                                <span class="standart-text_light-grey">автор</span>
-                            </button>
-                            <div class="filter-type__item" id="type_item">
-                                <div class="filter-type__wrapper">
-                                    {{ form.author }}
+                            </li>
+                            <li class="setting__item">
+                                <button type="button" class="button_style-none" id="filter-type">
+                                    <svg class="close-filter__author" id="svg_author" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <line x1="8" x2="8" y2="16" stroke="#95A1BB" stroke-width="2"/>
+                                        <line y1="8" x2="16" y2="8" stroke="#95A1BB" stroke-width="2"/>
+                                    </svg>
+                                    <span class="standart-text_light-grey">автор</span>
+                                </button>
+                                <div class="filter-type__item" id="type_item">
+                                    <div class="filter-type__wrapper">
+                                        {{ form.author }}
+                                    </div>
                                 </div>
-                            </div>
-                        </li>
-                    </ul>
+                            </li>
+                        </ul>
                         <button type="submit" id="sendFilter" class="send-filter standart-text_grey"><h3>Применить</h3></button>
                     </form>
                 </div>
             </div>
             <div class="project__feed">
+                {% if projects.count < 1 %}
+                    <h1>Проектов по данному запросу не найдено.</h1>
+                {% endif %}
+
                 {% for project in projects %}
                 <div class="feed__item">
                     {% if project.image %}
-                        <a href="#" id="user-project__link"><img src="{{ project.image.url }}" width="300" height="300" id="project-photo" alt=""></a>
+                        <a href="#" id="user-project__link"><img src="{{ project.image.url }}" width="347" height="270" id="project-photo" alt=""></a>
                     {% else %}
                         <a href="#" id="user-project__link"><img src="{% static 'vendor/assets/img/project-photo.png' %}" alt="Привью проекта" id="project-photo"></a>
                     {% endif %}
@@ -202,8 +175,6 @@
                             <a href="#" id="user-project__link">
                                 <h2 id="name-progect">{{ project.name }}</h2>
                             </a>
-
-                            <span id="project-date">20 Map 2024</span>
                             <p class="progect__description"><b>Описание проекта</b><br> <span id="progect__description">{{ project.description }}</span></p>
                         </div>
                         <div class="project__information">
@@ -211,43 +182,35 @@
                             <div class="project__rating">
                                 <div class="like__wrapper">
                                     {% include 'snippets/likes.html' %}
-                                    <!--<button type="button" class="info__rating-project" id="like-button"><img src="{#% static 'vendor/assets/img/Likes.png' %#}" id="like-icon" alt="Иконка лайка"><span class="activities-number" id="like-number">0</span></button>-->
-                                </div>
-                                <div class="info__rating-project">
-                                    <button type="button" id="share"><img src="{% static 'vendor/assets/img/Share.png' %}" alt="Иконка поделиться"></button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 {% endfor %}
-
             </div>
         </div>
     </main>
     <footer>
-        <!--<button class="footer__button user__text_DM-sans" type="button">Ещё проекты <span id="still-projects">(60+)</span></button>-->
-    <div class="feed-pages">
-        {% if is_paginated %}
-            {% if page_obj.has_previous %}
-                <a href="?page=1"><span class="feed-movement standart-text_light-grey">В начало</span></a>
-                <!--<a href="?page={#  #}{ page_obj.previous_page_number }}">Previous</a>-->
-            {% endif %}
-            <span class="numbers-pages">
-            {% for num in page_obj.paginator.page_range %}
-                {% if page_obj.number == num %}
-                    <a class = "active" href="?page={{ num }}"><span class="standart-text_light-grey">{{ num }}</span></a>
-                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-                    <a href="?page={{ num }}"><span class="standart-text_light-grey">{{ num }}</span></a>
+        <div class="feed-pages">
+            {% if is_paginated %}
+                {% if page_obj.has_previous %}
+                    <a href="?page=1&sort={{ current_sort }}&order={{ current_order }}"><span class="feed-movement standart-text_light-grey">В начало</span></a>
                 {% endif %}
-            {% endfor %}
-            </span>
-            {% if page_obj.has_next %}
-                <!--<a href="?page={#  #}{ page_obj.next_page_number }}">Next</a>-->
-                <a href="?page={{ page_obj.paginator.num_pages }}"><span class="feed-movement standart-text_light-grey">В конец</span></a>
+                <span class="numbers-pages">
+                {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                        <a class="active" href="?page={{ num }}&sort={{ current_sort }}&order={{ current_order }}"><span class="standart-text_light-grey">{{ num }}</span></a>
+                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                        <a href="?page={{ num }}&sort={{ current_sort }}&order={{ current_order }}"><span class="standart-text_light-grey">{{ num }}</span></a>
+                    {% endif %}
+                {% endfor %}
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.paginator.num_pages }}&sort={{ current_sort }}&order={{ current_order }}"><span class="feed-movement standart-text_light-grey">В конец</span></a>
+                {% endif %}
             {% endif %}
-        {% endif %}
-    </div>
+        </div>
     </footer>
     <script src="{% static 'vendor/js/main.js' %}" defer></script>
 </body>

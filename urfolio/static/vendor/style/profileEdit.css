@@ -1,4 +1,4 @@
-button{
+.links > button{
     border-radius: 90px;
     padding: 16px 24px;
     width: 424px;
@@ -8,7 +8,7 @@ button{
     font-size: 16px;
     font-weight: 700;
     margin-left: 20%;
-    margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 .input-file {
@@ -151,6 +151,7 @@ input.descript{
     display: flex;
     gap: 100px;
     margin-top: 100px;
+    justify-content: center;
 }
 
 .edit-link{

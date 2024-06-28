@@ -54,10 +54,20 @@ main{
 .project__card{
     display: flex;
     flex-direction: row;
-    width: 80%;
+    width: 84%;
     margin: 0 auto;
     gap: 5%;
     margin-bottom: 70px;
+}
+
+.project-avatar{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.user-links{
+    margin-top: 15px;
 }
 
 .project__title{
@@ -66,16 +76,36 @@ main{
     gap: 30px;
 }
 
+.typeDate-project{
+    display: flex;
+    gap: 20px;
+}
+
 .project-info__wrapper{
     display: flex;
     flex-direction: column;
-    gap: 45%;
+    gap: 100px;
+    width: 100%;
+}
+
+.interact-project__wrapper{
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+}
+
+.interact-project{
+    text-align: left;
+    justify-content: left;
+    display: flex;
+    align-items: center;
+    width: 100%;
 }
 
 .project__rating{
     display: flex;
     flex-direction: row;
-    justify-content: right;
+    justify-content: left;
     gap: 22px;
 }
 
@@ -95,10 +125,18 @@ main{
 
 .gallery-feed{
     display: flex;
-    width: 1195px;
-    gap: 15px;
+    width: 1300px;
+    justify-content: center;
+    gap: 30px;
     margin: 5px;
-    overflow-x: scroll;
+    flex-wrap: wrap;
+}
+
+.gallery-feed > img {
+    width: 400px;
+    display: block;
+    border-radius: 20px;
+    object-fit: cover;
 }
 
 .gallery-feed::-webkit-scrollbar{
@@ -183,7 +221,7 @@ input:focus{
     margin-bottom: 30px;
 }
 
-.user-comments, hr{
+.user-comments{
     max-width: calc(59vw + 100px);
 }
 
@@ -194,6 +232,13 @@ input:focus{
     border-radius: 100%;
 }
 
+.user-img > img{
+    width: 48px;
+    height: 48px;
+    border-radius: 100%;
+    object-fit: cover;
+}
+
 .answer-comments, .user-comments{
     display: flex;
     align-items: center;
@@ -202,6 +247,7 @@ input:focus{
 
 .answer-comments{
     margin-left: 60px;
+    margin-top: 10px;
 }
 
 .user-text > h4{
@@ -223,6 +269,8 @@ input:focus{
 .time{
     font-size: 14px;
 }
+
+
 
 .comments__wrapper > button{
     background-color: #000000;
@@ -249,3 +297,4 @@ input:focus{
     margin-bottom: 10px;
 }
 /* НК */
+

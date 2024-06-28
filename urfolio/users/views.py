@@ -1,10 +1,10 @@
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse
 from django.views import View
 from .forms import UserCreationForm, ProfileUpdateForm, UserUpdateForm
 from main.models import Project
 from .models import Profile, User
-
 
 class Register(View):
     template_name = 'registration/register.html'
@@ -19,11 +19,12 @@ class Register(View):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            username = form.cleaned_data.get('username') # ПАРОЛИ 8 СИМВОЛОВ МИНИМУМ, И ЦИФРЫ, И БУКВЫ
-            password = form.cleaned_data.get('password1') # МОЖНО ЕМЭЙЛ!! email = form.cleaned_data.get('email')
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=password)
-            login(request, user)
-            return redirect('profile')
+            if user is not None:
+                login(request, user)
+                return redirect(reverse('profile', kwargs={'username': username}))
         context = {
             'form': form,
         }
@@ -71,3 +72,4 @@ def profile(request, username):
         return render(request, 'users/profile.html', context)
     else:
         return render(request, 'users/guest_profile.html', context)
+

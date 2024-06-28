@@ -29,37 +29,28 @@
                     <p class="description" id="description">{{ profile.description }}</p>
                 </div>
                 <div class="user-links">
-                    <a href="{{ profile.github_link }}"><img src="{% static 'vendor/assets/img/github.png' %}" width="40px" alt=""></a>
-                    <a href="{{ profile.figma_link }}"><img src="{% static 'vendor/assets/img/figma.png' %}" width="40px" alt=""></a>
-                    <a href="{{ profile.vk_link }}"><img src="{% static 'vendor/assets/img/vk.png' %}" width="40px" alt=""></a>
-                    <a href="{{ profile.tg_link }}"><img src="{% static 'vendor/assets/img/tg.png' %}" width="40px" alt=""></a>
-                    <a href="{{ profile.could_link }}"><img src="{% static 'vendor/assets/img/could.png' %}" width="40px" alt=""></a>
+                    {% if profile.github_link %}
+                        <a href="{{ profile.github_link }}"><img src="{% static 'vendor/assets/img/github.png' %}" width="40px" alt=""></a>
+                    {% endif %}
+                    {% if profile.figma_link %}
+                        <a href="{{ profile.figma_link }}"><img src="{% static 'vendor/assets/img/figma.png' %}" width="40px" alt=""></a>
+                    {% endif %}
+                    {% if profile.vk_link %}
+                        <a href="{{ profile.vk_link }}"><img src="{% static 'vendor/assets/img/vk.png' %}" width="40px" alt=""></a>
+                    {% endif %}
+                    {% if profile.tg_link %}
+                        <a href="{{ profile.tg_link }}"><img src="{% static 'vendor/assets/img/tg.png' %}" width="40px" alt=""></a>
+                    {% endif %}
+                    {% if profile.cloud_link %}
+                        <a href="{{ profile.cloud_link }}"><img src="{% static 'vendor/assets/img/could.png' %}" width="40px" alt=""></a>
+                    {% endif %}
                 </div>
             </div>
         </div>
-
-    <p>User Projects:</p>
-        {% for project in projects %}
-            {% if project.author == profile.user %}
-                <p>{{ project.name }}</p>
-                <a href="{% url 'projects:project_update' project.id %}"><span class="interaction-profile__text">Редактировать проект</span></a>
-                <a href="{% url 'projects:project_delete' project.id %}"><span class="interaction-profile__text">Удалить</span></a>
-                <a href="{% url 'projects:project_detail' pk=project.id %}">
-                    <img src="{{ project.image.url }}" width="400" height="300" alt="">
-                </a>
-            {% endif %}
-        {% endfor %}
-
-        <p>User likes</p>
-        {% for project in projects %}
-            {% if profile.user in project.slikess.all %}
-                <p>{{ project.name }}</p>
-                <a href="{% url 'projects:project_detail' pk=project.id %}">
-                    <img src="{{ project.image.url }}" width="400" height="300" alt="">
-                </a>
-            {% endif %}
-        {% endfor %}
         <div class="user-project__wrapper">
+            <a href="{% url 'projects:project_create' %}">
+                <div class="sumbit-btn">Добавить проект</div>
+            </a>
             <div class="user-project">
                 <button class="profile-list" id="button_user_project">
                     <svg id="svg_list_status" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -70,36 +61,25 @@
                 </button>
                 <div class="list-project__wrapper" id="list_project">
                     <div class="list__wrapper">
-                        <button id="user_left_btn">
-                            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M17.9091 15.2652C17.5032 14.8906 16.8706 14.9159 16.496 15.3217L13.2652 18.8217C12.9116 19.2047 12.9116 19.7952 13.2652 20.1782L16.496 23.6783C16.8706 24.0841 17.5032 24.1094 17.909 23.7348C18.3149 23.3602 18.3402 22.7276 17.9656 22.3217L16.284 20.5L26 20.5C26.5523 20.5 27 20.0523 27 19.5C27 18.9477 26.5523 18.5 26 18.5L16.284 18.5L17.9656 16.6783C18.3402 16.2725 18.3149 15.6398 17.9091 15.2652Z" fill="#777E90"/>
-                            </svg>
-                        </button>
-                            {% for project in projects %}
-                                {% if project.author == user %}
-                                    <a href="{% url 'projects:project_detail' pk=project.id %}">Подробнее</a>
-                                <h2>{{ project.name }}</h2>
-                                <div class="project__wrapper">
-                                    <div class="project__img">
-                                        <img src="{{ project.image.url }}" alt="">
-                                    </div>
-                                    <div class="interact-project">
-                                    </div>
-                                    <a href="{% url 'projects:project_update' project.id %}"><span class="interaction-profile__text">Редактировать проект</span></a>
-                                    <a href="{% url 'projects:project_delete' project.id %}"><span class="interaction-profile__text">Удалить</span></a>
-
-                                </div>
-                                {% endif %}
-                            {% endfor %}
-                        <button id="user_right_btn">
-                            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M22.0909 15.2652C22.4968 14.8906 23.1294 14.9159 23.504 15.3217L26.7348 18.8217C27.0884 19.2047 27.0884 19.7952 26.7348 20.1782L23.504 23.6783C23.1294 24.0841 22.4968 24.1094 22.091 23.7348C21.6851 23.3602 21.6598 22.7276 22.0344 22.3217L23.716 20.5L14 20.5C13.4477 20.5 13 20.0523 13 19.5C13 18.9477 13.4477 18.5 14 18.5L23.716 18.5L22.0344 16.6783C21.6598 16.2725 21.6851 15.6398 22.0909 15.2652Z" fill="#777E90"/>
-                            </svg>
-                        </button>
+                        <div class="project-gallery">
+                            <div class="gallery-feed">
+                                    {% for project in projects %}
+                                        {% if project.author == profile.user %}
+                                            <div class="gallery-item">
+                                                <h2>{{ project.name }}</h2>
+                                                <a href="{% url 'projects:project_detail' pk=project.id %}">
+                                                    <img src="{{ project.image.url }}" width="400" height="300" alt="">
+                                                </a>
+                                                <div class="interact-project">
+                                                    <a href="{% url 'projects:project_update' project.id %}"><span class="standart-text_light-grey project-profile_text">Редактировать проект</span></a>
+                                                    <a href="{% url 'projects:project_delete' project.id %}"><span class="standart-text_light-grey project-profile_text">Удалить</span></a>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                            </div>
+                        </div>
                     </div>
-                    <a href="{% url 'projects:project_create' %}">
-                        <div class="sumbit-btn">Добавить проект</div>
-                    </a>
                 </div>
             </div>
             <div class="user-project">
@@ -112,33 +92,25 @@
                 </button>
                 <div class="list-project__wrapper" id="list_project">
                     <div class="list__wrapper">
-                        <button id="liked_left_btn">
-                            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M17.9091 15.2652C17.5032 14.8906 16.8706 14.9159 16.496 15.3217L13.2652 18.8217C12.9116 19.2047 12.9116 19.7952 13.2652 20.1782L16.496 23.6783C16.8706 24.0841 17.5032 24.1094 17.909 23.7348C18.3149 23.3602 18.3402 22.7276 17.9656 22.3217L16.284 20.5L26 20.5C26.5523 20.5 27 20.0523 27 19.5C27 18.9477 26.5523 18.5 26 18.5L16.284 18.5L17.9656 16.6783C18.3402 16.2725 18.3149 15.6398 17.9091 15.2652Z" fill="#777E90"/>
-                            </svg>
-                        </button>
-                            {% for project in projects %}
-                                {% if user in project.slikess.all %}
-                                <h2>{{ project.name }}</h2>
-                                <div class="project__wrapper">
-                                    <div class="project__img">
-                                        <img src="{{ project.image.url }}" alt="">
-                                    </div>
-                                </div>
-                                <a href="{% url 'projects:project_detail' pk=project.id %}">Подробнее</a>
-                                {% endif %}
-                            {% endfor %}
-                        <button id="liked_right_btn">
-                            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M22.0909 15.2652C22.4968 14.8906 23.1294 14.9159 23.504 15.3217L26.7348 18.8217C27.0884 19.2047 27.0884 19.7952 26.7348 20.1782L23.504 23.6783C23.1294 24.0841 22.4968 24.1094 22.091 23.7348C21.6851 23.3602 21.6598 22.7276 22.0344 22.3217L23.716 20.5L14 20.5C13.4477 20.5 13 20.0523 13 19.5C13 18.9477 13.4477 18.5 14 18.5L23.716 18.5L22.0344 16.6783C21.6598 16.2725 21.6851 15.6398 22.0909 15.2652Z" fill="#777E90"/>
-                            </svg>
-                        </button>
+                        <div class="project-gallery">
+                            <div class="gallery-feed">
+                                {% for project in projects %}
+                                    {% if profile.user in project.slikess.all %}
+                                        <div class="gallery-item">
+                                            <h2>{{ project.name }}</h2>
+                                            <a href="{% url 'projects:project_detail' pk=project.id %}">
+                                                <img src="{{ project.image.url }}" width="400" height="300" alt="">
+                                            </a>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </main>
-
     <script src="{% static 'vendor/js/profile.js' %}" defer></script>
 </body>
 </html>

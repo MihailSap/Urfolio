@@ -7,9 +7,12 @@ header{
     margin-right: 10%;
 }
 
-/* .profile-avatar > img{
-
-} */
+.profile-avatar > img{
+    width: 200px;
+    height: 200px;
+    border-radius: 100%;
+    object-fit: cover;
+}
 
 .profile-info{
     display: flex;
@@ -41,7 +44,7 @@ header{
 }
 
 .user-project__wrapper{
-    width: 80vw;
+    width: 85vw;
     margin: 0 auto;
 }
 
@@ -59,6 +62,25 @@ header{
     justify-content: center;
 }
 
+.profile-list > h1:hover{
+    color: #465336;
+}
+
+.profile-list > h1:active{
+    color: #979797;
+}
+
+.list-project__wrapper {
+    display: none;
+    flex-direction: column;
+}
+
+.user-project__wrapper > a{
+    display: block;
+    margin: 50px auto;
+    max-width: max-content;
+}
+
 .list-project{
     display: none;
     margin-top: 50px;
@@ -68,6 +90,59 @@ header{
 .list-project > li{
     display: flex;
     justify-content: space-between;
+}
+
+.project-gallery{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 60px;
+    width: 1300px;
+}
+
+.gallery-feed{
+    display: flex;
+    width: 1300px;
+    justify-content: left;
+    gap: 50px;
+    flex-wrap: wrap;
+    margin-top: 30px;
+}
+
+.sumbit-btn {
+    border-radius: 25px;
+    padding: 16px 0 16px 0;
+    color: white;
+    font-weight: 800;
+    background-color: #000000;
+}
+
+.sumbit-btn:hover{
+    background-color: #465336;
+}
+
+.sumbit-btn:active{
+    background-color: #979797;
+}
+
+.gallery-item{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 30px;
+    max-width: max-content;
+}
+
+.gallery-item > h2{
+    text-align: center;
+}
+
+.gallery-feed > a{
+    max-width: max-content;
+}
+
+.interact-project{
+    display: flex;
+    justify-content: space-around;
 }
 
 .interaction-project > a:not(:last-child){
@@ -93,4 +168,9 @@ header{
     text-align: center;
     width: 25vw;
     margin: 0 auto;
+}
+
+.gallery-item > a > img{
+    border-radius: 20px;
+    object-fit: cover;
 }

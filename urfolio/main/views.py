@@ -70,20 +70,9 @@ def ProjectDeleteView(request, pk):
     project = get_object_or_404(Project, id=pk, author=request.user)
     if request.user == project.author:
         project.delete()
-    return redirect(reverse_lazy('projects:index1'))
+    return redirect(reverse_lazy('profile', kwargs={'username': request.user.username}))
 
 # ОТОБРАЖЕНИЕ ПРОЕКТА НА ОТДЕЛЬНОЙ СТРАНИЦЕ
-# class ProjectDetailView(DetailView): # Так правильнее
-#     model = Project
-#
-#     def get_context_data(self, *args, **kwargs):
-#         context = super(ProjectDetailView, self).get_context_data(*args, **kwargs)
-#         commentform = CommentCreateForm()
-#         replyform = ReplyCreateForm()
-#         context['commentform'] = commentform
-#         context['replyform'] = replyform
-#         return context
-
 def project_detail_view(request, pk):
     project = get_object_or_404(Project, pk=pk)
     commentform = CommentCreateForm()
@@ -104,22 +93,7 @@ class ProjectCreateView(CreateView):
         form.instance.author = self.request.user
         return super().form_valid(form)
 
-# РЕДАКТИРОВАНЕ ПРОФИЛЯ
-# class ProjectUpdateView(UserPassesTestMixin, UpdateView):
-#     model = Project
-#     fields = ['image', 'name', 'description', 'category', 'course_number', 'year']
-#
-#     def form_valid(self, form):
-#         form.instance.author = self.request.user
-#         return super().form_valid(form)
-#
-#     def test_func(self): # Пользователь может редактировать только свои проекты
-#         project = self.get_object()
-#         if self.request.user == project.author:
-#             return True
-#         return False
-
-
+# РЕДАКТИРОВАНЕ ПРОЕКТА
 def project_management(request, pk=None):
     if pk:
         project = get_object_or_404(Project, id=pk)
@@ -172,10 +146,12 @@ class ProjectListView(ListView):
         sort_by = self.request.GET.get('sort', None)
         sort_order = self.request.GET.get('order', 'asc')  # Default to ascending order
         next_order = 'asc' if sort_order == 'desc' else 'desc'
+        current_order = 'desc' if sort_order == 'desc' else 'asc'
         projects_filters = ProjectFilter(self.request.GET, queryset=self.get_queryset())
         context.update({
             'form': projects_filters.form,
             'next_order': next_order,
             'current_sort': sort_by,
+            'current_order': current_order
         })
         return context

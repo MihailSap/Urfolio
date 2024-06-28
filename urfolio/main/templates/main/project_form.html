@@ -25,29 +25,24 @@
                     {% else %}
                         <img src="{% static 'vendor/assets/img/project-photo.png' %}" alt="Текущее изображение">
                     {% endif %}
-                    <!--<form method="post" enctype="multipart/form-data">-->
                         <label class="input-file">
                             {{ form.image }}
                             <span>Выберите файл</span>
                             <img id="check" src="{% static 'vendor/assets/img/icons8.gif' %}" alt="Галочка появилась">
                         </label>
-                    <!--</form>-->
                 </div>
                 <div class="project-type">
                     <div class="type__wrapper">
                         <label for="title">Название проекта</label>
                         {{ form.name }}
-                        <!--<input type="text" placeholder="Введите название проекта" id="title" class="" name="project-name">-->
                     </div>
                     <div class="type-list">
                         <label for="type">Тип проекта</label>
                         {{ form.category }}
-                        <!--<button id="type">Выберите тип проекта<img src="../assets/img/botton_arrow.svg" alt=""></button>-->
                     </div>
                     <div class="type-list">
                         <label for="year">Год создания</label>
                         {{ form.year }}
-                        <!--<button id="year">Выберите год создания проекта<img src="../assets/img/botton_arrow.svg" alt=""></button>-->
                     </div>
                     <div class="type-list">
                         <label for="year">Номер курса</label>
@@ -55,28 +50,43 @@
                     </div>
                     <div class="type__wrapper">
                         <label for="people">Участники</label>
+                        {{ form.members }}
                         <!--<textarea name="participants" id="people" placeholder="Добавьте участников проекта" id=""></textarea>-->
+                    </div>
+                    <div class="links">
+                        <label for="name"><img src="{% static 'vendor/assets/img/vk.png' %}" alt=""></label>
+                        {{ form.vk_link }}
+                        <label for="name"><img src="{% static 'vendor/assets/img/tg.png' %}" alt=""></label>
+                        {{ form.tg_link }}
+                        <label for="name"><img src="{% static 'vendor/assets/img/github.png' %}" alt=""></label>
+                        {{ form.github_link }}
+                        <label for="name"><img src="{% static 'vendor/assets/img/figma.png' %}" alt=""></label>
+                        {{ form.figma_link }}
+                        <div class="input__wrapper">
+                            <label for="name"><img src="{% static 'vendor/assets/img/could.png' %}" alt=""></label>
+                            {{ form.cloud_link }}
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="project-gallery">
                 <h2>Добавленные изображения</h2>
-                <span>Необходимо добавить ещё <b>минимум</b> 3 изображения!</span>
+                <span>Добавить ещё изображения. Это позволит <b>лучше</b> узнать ваш проект!</span>
                 <div class="list__wrapper">
-                    <button id="liked_left_btn">
-                        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M17.9091 15.2652C17.5032 14.8906 16.8706 14.9159 16.496 15.3217L13.2652 18.8217C12.9116 19.2047 12.9116 19.7952 13.2652 20.1782L16.496 23.6783C16.8706 24.0841 17.5032 24.1094 17.909 23.7348C18.3149 23.3602 18.3402 22.7276 17.9656 22.3217L16.284 20.5L26 20.5C26.5523 20.5 27 20.0523 27 19.5C27 18.9477 26.5523 18.5 26 18.5L16.284 18.5L17.9656 16.6783C18.3402 16.2725 18.3149 15.6398 17.9091 15.2652Z" fill="#777E90"/>
-                        </svg>
-                    </button>
                     <ul class="list-project" id="list_liked_project">
                         <li class="project">
                             <div class="project__wrapper">
                                 <div class="project__img">
-                                    <img src="../assets/img/project-photo.png" alt="">
+                                    {% if project.photo1 %}
+                                        <img src="{{ project.photo1.url }}">
+                                    {% else %}
+                                        <img src="{% static 'vendor/assets/img/project-photo.png' %}" alt="Текущее изображение">
+                                    {% endif %}
+
                                     <label class="input-file">
-                                        <input type="file" id="second" name="file">
+                                        {{ form.photo1 }}
                                         <span>Выберите файл</span>
-                                        <img id="check" src="{% static 'vendor/assets/img/icons8.gif' %}" alt="">
+                                        <img id="check" src="{% static 'vendor/assets/img/icons8.gif' %}" alt="Галочка появилась">
                                     </label>
                                 </div>
                             </div>
@@ -84,11 +94,15 @@
                         <li class="project">
                             <div class="project__wrapper">
                                 <div class="project__img">
-                                    <img src="../assets/img/project-photo.png" alt="">
+                                    {% if project.photo2 %}
+                                        <img src="{{ project.photo2.url }}">
+                                    {% else %}
+                                        <img src="{% static 'vendor/assets/img/project-photo.png' %}" alt="Текущее изображение">
+                                    {% endif %}
                                     <label class="input-file">
-                                        <input type="file" id="third" name="file">
+                                        {{ form.photo2 }}
                                         <span>Выберите файл</span>
-                                        <img id="check" src="{% static 'vendor/assets/img/icons8.gif' %}" alt="">
+                                        <img id="check" src="{% static 'vendor/assets/img/icons8.gif' %}" alt="Галочка появилась">
                                     </label>
                                 </div>
                             </div>
@@ -96,11 +110,15 @@
                         <li class="project">
                             <div class="interaction-project">
                                 <div class="project__img">
-                                    <img src="../assets/img/project-photo.png" alt="">
+                                    {% if project.photo3 %}
+                                        <img src="{{ project.photo3.url }}">
+                                    {% else %}
+                                        <img src="{% static 'vendor/assets/img/project-photo.png' %}" alt="Текущее изображение">
+                                    {% endif %}
                                     <label class="input-file">
-                                        <input type="file" id="fourth" name="file">
+                                        {{ form.photo3 }}
                                         <span>Выберите файл</span>
-                                        <img id="check" src="{% static 'vendor/assets/img/icons8.gif' %}" alt="">
+                                        <img id="check" src="{% static 'vendor/assets/img/icons8.gif' %}" alt="Галочка появилась">
                                     </label>
                                 </div>
                             </div>
@@ -108,27 +126,25 @@
                         <li class="project">
                             <div class="interaction-project">
                                 <div class="project__img">
-                                    <img src="../assets/img/project-photo.png" alt="">
+                                    {% if project.photo4 %}
+                                        <img src="{{ project.photo4.url }}">
+                                    {% else %}
+                                        <img src="{% static 'vendor/assets/img/project-photo.png' %}" alt="Текущее изображение">
+                                    {% endif %}
                                     <label class="input-file">
-                                        <input type="file" name="file">
+                                        {{ form.photo4 }}
                                         <span>Выберите файл</span>
-                                        <img id="check" src="{% static 'vendor/assets/img/icons8.gif' %}" alt="">
+                                        <img id="check" src="{% static 'vendor/assets/img/icons8.gif' %}" alt="Галочка появилась">
                                     </label>
                                 </div>
                             </div>
                         </li>
                     </ul>
-                    <button id="liked_right_btn">
-                        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M22.0909 15.2652C22.4968 14.8906 23.1294 14.9159 23.504 15.3217L26.7348 18.8217C27.0884 19.2047 27.0884 19.7952 26.7348 20.1782L23.504 23.6783C23.1294 24.0841 22.4968 24.1094 22.091 23.7348C21.6851 23.3602 21.6598 22.7276 22.0344 22.3217L23.716 20.5L14 20.5C13.4477 20.5 13 20.0523 13 19.5C13 18.9477 13.4477 18.5 14 18.5L23.716 18.5L22.0344 16.6783C21.6598 16.2725 21.6851 15.6398 22.0909 15.2652Z" fill="#777E90"/>
-                        </svg>
-                    </button>
                 </div>
             </div>
             <div class="decription">
                 <h3>Описание</h3>
                 {{ form.description }}
-                <!--<textarea name="descrip" placeholder="Введите описание проекта"></textarea>-->
             </div>
             <div class="interact-project">
                 <button type="submit" id="sumbit" class="interact sumbit-btn">Добавить проект/применить изменения</button>
