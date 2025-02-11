@@ -1,1 +1,1 @@
-My first backend project "digital portfolio", created on Python, Django.
+Проект по теме "Digital portfolio".
